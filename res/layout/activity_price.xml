@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+     <!-- 头部导航栏 -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/color_topback" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:contentDescription="@string/pic_placehold"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/bank_home_ico" />
+
+            <TextView
+                android:id="@+id/main_city"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+				android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/main_price"
+                android:textColor="@drawable/color_white"
+                android:textSize="14sp" />
+            
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/pic_placehold"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/head_search_ico" />
+        </RelativeLayout>
+        <!-- 搜索框 -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/color_white"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp" >
+
+            <EditText
+                android:id="@+id/main_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/main_search_bg"
+                android:hint="@string/main_search_hint"
+                android:paddingLeft="5dp" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="37dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/search_nav_ico" />
+        </RelativeLayout>
+
+</LinearLayout>

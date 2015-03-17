@@ -1,0 +1,296 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.wegame.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:id="@+id/main_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <!-- 头部导航栏 -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/color_topback" >
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="fill_parent"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/pic_placehold"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/home_head_logo" />
+
+            <TextView
+                android:id="@+id/main_city"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/main_city_bg"
+                android:gravity="center"
+                android:text="@string/locating"
+                android:textColor="@drawable/color_white"
+                android:textSize="14sp" />
+        </RelativeLayout>
+        <!-- 搜索框 -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/color_white"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp" >
+
+            <EditText
+                android:id="@+id/main_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/main_search_bg"
+                android:hint="@string/main_search_hint"
+                android:paddingLeft="5dp"
+                android:singleLine="true" />
+
+            <ImageView
+                android:id="@+id/main_search_btn"
+                android:layout_width="30dp"
+                android:layout_height="37dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/search_nav_ico" />
+        </RelativeLayout>
+        <!-- 中间六大按钮 -->
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#00000000"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:stretchColumns="*" >
+
+            <TableRow android:background="#00000000" >
+
+                <!-- 查价格 -->
+
+                <RelativeLayout
+                    android:id="@+id/main_price"
+                    android:layout_width="1dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_ico_back" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_horizontal"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/home_ico_a" />
+
+                        <TextView
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/main_price"
+                            android:textColor="@drawable/color_white"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <!-- 供应商 -->
+
+                <RelativeLayout
+                    android:id="@+id/main_provider"
+                    android:layout_width="1dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_ico_back" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_horizontal"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/home_ico_b" />
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/main_provider"
+                            android:textColor="@drawable/color_white"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <!-- 采购清单 -->
+
+                <RelativeLayout
+                    android:id="@+id/main_list"
+                    android:layout_width="1dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_ico_back" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_horizontal"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/home_ico_c" />
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/main_list"
+                            android:textColor="@drawable/color_white"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_marginTop="10dp"
+                android:background="#00000000" >
+
+                <!-- 关于中农 -->
+
+                <RelativeLayout
+                    android:id="@+id/main_about"
+                    android:layout_width="1dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_ico_back" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_horizontal"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/home_ico_d" />
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/main_about"
+                            android:textColor="@drawable/color_white"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <!-- 会员服务 -->
+
+                <RelativeLayout
+                    android:id="@+id/main_service"
+                    android:layout_width="1dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_ico_back" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_horizontal"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/home_ico_e" />
+
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/main_service"
+                            android:textColor="@drawable/color_white"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <!-- 注册 -->
+
+                <RelativeLayout
+                    android:id="@+id/main_regist"
+                    android:layout_width="1dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_ico_back" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical" >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_horizontal"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/home_ico_f" />
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/main_regist"
+                            android:textColor="@drawable/color_white"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="bottom"
+        android:background="#00000000"
+        android:contentDescription="@string/main_ad_desc"
+        android:scaleType="fitXY"
+        android:src="@drawable/ad" />
+
+</FrameLayout>

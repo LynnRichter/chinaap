@@ -1,0 +1,32 @@
+<resources>
+
+    <string name="app_name">百菜价</string>
+    <string name="locating">定位中</string>
+    <string name="pic_placehold">图片</string>
+    <string name="main_search_hint">按农产品名称搜索</string>
+    <string name="main_price">查价格</string>
+    <string name="main_provider">找供应商</string>
+    <string name="main_list">采购清单</string>
+    <string name="main_about">关于中农</string>
+    <string name="main_service">会员服务</string>
+    <string name="main_regist">注册/登录</string>
+    <string name="main_ad_desc">广告图片</string>
+    <string name="log_tag">lynntag</string>
+    
+    <string name="SERVER_STR">8Z3anAKeNmQdMnmFFkpa6SElEJQ=</string>
+    <string name="CLIENT_STR">1337829</string>
+    <string name="URL_IPINFO">http://test.chinaap.com/mobile/admin/ipInfo</string>
+    
+    
+    
+    <drawable name="color_topback">#3588d3</drawable>
+    <drawable name="color_white">#ffffff</drawable>
+    
+    
+    
+    
+    
+    
+    
+
+</resources>
