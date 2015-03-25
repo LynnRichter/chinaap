@@ -10,6 +10,8 @@ import com.example.wegame.R;
 import com.example.wegame.R.string;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -74,7 +77,7 @@ public class MainActivity extends Activity {
 			}
 		};
 		new Thread(threadRunnable).start();
-
+//点击搜索按钮
 		ImageView searchBtn =(ImageView)this.findViewById(R.id.main_search_btn);
 		searchBtn.setOnClickListener(new OnClickListener() {
 			
@@ -83,5 +86,41 @@ public class MainActivity extends Activity {
 				Log.d(getString(R.string.log_tag), "I clicked the search btn");
 			}
 		});
+//		点击关于中农按钮
+		RelativeLayout aboutBtn = (RelativeLayout)this.findViewById(R.id.main_about);
+		aboutBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent =new Intent();
+				intent.setClass(MainActivity.this, InfoActivity.class);
+				startActivity(intent);
+			}
+		});
+//		点击会员服务
+		RelativeLayout serviceLayout = (RelativeLayout)this.findViewById(R.id.main_service);
+		serviceLayout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, ServiceActivity.class);
+				startActivity(intent);
+			}
+		});
+//		点击注册登录
+		RelativeLayout loginLayout = (RelativeLayout)this.findViewById(R.id.main_regist);
+		loginLayout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent();
+//				判断是否登录过帐号
+				intent.setClass(MainActivity.this, LoginActivity.class);
+				startActivity(intent);				
+			}
+		});
+		
 	}
 }

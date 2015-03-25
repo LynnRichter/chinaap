@@ -11,22 +11,32 @@
     <string name="main_service">会员服务</string>
     <string name="main_regist">注册/登录</string>
     <string name="main_ad_desc">广告图片</string>
+    <string name="price_start">开始搜索</string>
+    <string name="about_detail">\t深圳市中农数据有限公司（简称“中农数据”）深圳市农产品股份有限公司(SZ000061)旗下企业；专业的农产品大数据公司 ；专注于农产品大数据提供商和农产品价格数据权威服务平台；汇集全国几十家农产品批发市场的农产品数据；公司编制和发布了“前海   中国农产品批发价格系列指数”；服务于深圳3000多家采购商会员；为政府、企事业单位食堂、餐饮企业等提供价格参考服务。</string>
+    <string name="service_1">\t\t手机端客户可免费查看全国各个市场5000多个品种的价格行情,并可添加100个品种到采购清单,收费会员可添加5000多个品种到采购清单</string>
+    <string name="service_2">\t\t平台现有的会员服务:</string>
+    <string name="service_3">\t\t5800元/年套餐</string>
+    <string name="service_4">\t\t定制会员服务</string>
+    <string name="service_5">\t\t招标信息服务</string>
+    <string name="service_6">\t\t推广服务</string>
+    <string name="service_7">\t\t详情请咨询客服热线</string>
+    <string name="service_8">\t\t400-114-6668</string>
+    <string name="login_phone">手机</string>
+    <string name="login_pwd">登录密码</string>
+    <string name="login_sure">登录</string>
+    <string name="login_regist">注册帐号</string>
+    <string name="login_text">登录即可查看全部数据，还能使用收藏功能，还没帐号，免费注册一个！</string>
     <string name="log_tag">lynntag</string>
+    
+    
     
     <string name="SERVER_STR">8Z3anAKeNmQdMnmFFkpa6SElEJQ=</string>
     <string name="CLIENT_STR">1337829</string>
     <string name="URL_IPINFO">http://test.chinaap.com/mobile/admin/ipInfo</string>
-    
-    
-    
+
     <drawable name="color_topback">#3588d3</drawable>
     <drawable name="color_white">#ffffff</drawable>
-    
-    
-    
-    
-    
-    
-    
+    <drawable name="color_text">#4a4a4a</drawable>
+    <drawable name="color_orange">#ff6600</drawable>
 
 </resources>
