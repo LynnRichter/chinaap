@@ -23,7 +23,7 @@
     <string name="service_8">\t\t400-114-6668</string>
     <string name="login_phone">手机</string>
     <string name="login_pwd">登录密码</string>
-    <string name="login_sure">登录</string>
+    <string name="login_sure">登\t\t录</string>
     <string name="login_regist">注册帐号</string>
     <string name="login_text">登录即可查看全部数据，还能使用收藏功能，还没帐号，免费注册一个！</string>
     <string name="log_tag">lynntag</string>
@@ -38,5 +38,7 @@
     <drawable name="color_white">#ffffff</drawable>
     <drawable name="color_text">#4a4a4a</drawable>
     <drawable name="color_orange">#ff6600</drawable>
+    <drawable name="color_stroke">#e4e4e4</drawable>
+    <drawable name="color_background">#fafafa</drawable>
 
 </resources>

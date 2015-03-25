@@ -29,7 +29,10 @@
         </activity>
         <activity android:name="com.example.wegame.ServiceActivity" >
         </activity>
-        <activity android:name="com.example.wegame.LoginActivity"></activity>
+        <activity android:name="com.example.wegame.LoginActivity" >
+        </activity>
+        <activity android:name="com.example.wegame.RegistActivity" >
+        </activity>
     </application>
 
 </manifest>
