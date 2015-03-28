@@ -26,13 +26,25 @@
     <string name="login_sure">登\t\t录</string>
     <string name="login_regist">注册帐号</string>
     <string name="login_text">登录即可查看全部数据，还能使用收藏功能，还没帐号，免费注册一个！</string>
+    <string name="login_mobile_empty">手机号码不能为空</string>
+    <string name="login_pwd_empty">密码不能为空</string>
+    <string name="login_error">用户名或密码错误，请稍后再试</string>
+    <string name="login_success">登录成功</string>
+    <string name="error_msg" >网络连接错误，请稍后再试</string>
+    <string name="vip_title">中农会员</string>
+    <string name="vip_exchange">切换帐号</string>
+    <string name="vip_logout">退出登录</string>
+    
     <string name="log_tag">lynntag</string>
+    <string name="key_username">UserName</string>
+    <string name="key_userid">UserId</string>
     
     
     
     <string name="SERVER_STR">8Z3anAKeNmQdMnmFFkpa6SElEJQ=</string>
     <string name="CLIENT_STR">1337829</string>
     <string name="URL_IPINFO">http://test.chinaap.com/mobile/admin/ipInfo</string>
+    <string name="URL_LOGIN">http://test.chinaap.com/mobile/user/loginUser</string>
 
     <drawable name="color_topback">#3588d3</drawable>
     <drawable name="color_white">#ffffff</drawable>
@@ -40,5 +52,6 @@
     <drawable name="color_orange">#ff6600</drawable>
     <drawable name="color_stroke">#e4e4e4</drawable>
     <drawable name="color_background">#fafafa</drawable>
+    <drawable name="color_lightgray">#999999</drawable>
 
 </resources>

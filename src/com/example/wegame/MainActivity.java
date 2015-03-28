@@ -26,7 +26,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
 	private TextView locationTextView;
-	private int GETCITY = 0;
+	private static final int GETCITY = 0;
 	
 
 	@Override
@@ -117,7 +117,12 @@ public class MainActivity extends Activity {
 			public void onClick(View arg0) {
 				Intent intent = new Intent();
 //				ÅÐ¶ÏÊÇ·ñµÇÂ¼¹ýÕÊºÅ
-				intent.setClass(MainActivity.this, LoginActivity.class);
+				if (JSONHelpler.getLogin(getApplicationContext())) {
+					intent.setClass(MainActivity.this, VIPActivity.class);
+				}
+				else {
+					intent.setClass(MainActivity.this, LoginActivity.class);
+				}
 				startActivity(intent);				
 			}
 		});

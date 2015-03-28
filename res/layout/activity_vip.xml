@@ -3,6 +3,170 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
+    <!-- 顶部导航栏 -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/color_topback" >
+
+        <ImageView
+            android:id="@+id/VIP_back"
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:contentDescription="@string/pic_placehold"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bank_home_ico" />
+
+        <TextView
+            android:id="@+id/main_city"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/vip_title"
+            android:textColor="@drawable/color_white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <!-- 用户名选项 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/color_stroke" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/color_white" >
+            <TextView 
+                android:id="@+id/vip_username"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:textColor="@drawable/color_text"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"/>
+            <TextView 
+                android:id="@+id/vip_exchange"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center|right"
+                android:textColor="@drawable/color_lightgray"
+                android:text="@string/vip_exchange"/>
+            <ImageView 
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_toLeftOf="@id/vip_exchange"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/switching_user_ico"
+                android:contentDescription="@string/main_ad_desc"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="91dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/color_stroke"
+        android:orientation="vertical" >
+
+        <!-- 会员服务 -->
+
+        <RelativeLayout
+            android:id="@+id/vip_service"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/color_white" >
+             <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:textColor="@drawable/color_text"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/main_service"/>
+             <ImageView 
+                 android:layout_width="10dp"
+                 android:layout_height="20dp"
+                 android:layout_marginTop="8dp"
+                 android:layout_marginRight="10dp"
+                 android:layout_alignParentRight="true"
+                 android:src="@drawable/user_arrow_ico"/>
+        </RelativeLayout>
+
+        <!-- 关于中农 -->
+
+        <RelativeLayout
+            android:id="@+id/vip_about"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/color_white" >
+              <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:textColor="@drawable/color_text"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/main_about"/>
+              <ImageView 
+                 android:layout_width="10dp"
+                 android:layout_height="20dp"
+                 android:layout_marginTop="8dp"
+                 android:layout_marginRight="10dp"
+                 android:layout_alignParentRight="true"
+                 android:src="@drawable/user_arrow_ico"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- 退出登录 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/color_stroke" >
+
+        <RelativeLayout
+            android:id="@+id/vip_logout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/color_white" >
+               <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:textColor="@drawable/color_text"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/vip_logout"/>
+               <ImageView 
+                 android:layout_width="20dp"
+                 android:layout_height="20dp"
+                 android:layout_marginTop="8dp"
+                 android:layout_marginRight="10dp"
+                 android:layout_alignParentRight="true"
+                 android:src="@drawable/login_out_ico"/>
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

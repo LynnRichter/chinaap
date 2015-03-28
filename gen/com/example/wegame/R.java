@@ -18,6 +18,7 @@ public final class R {
         public static final int bottom_back=0x7f020004;
         public static final int bottom_back_on=0x7f020005;
         public static final int color_background=0x7f020037;
+        public static final int color_lightgray=0x7f020038;
         public static final int color_orange=0x7f020035;
         public static final int color_stroke=0x7f020036;
         public static final int color_text=0x7f020034;
@@ -69,6 +70,7 @@ public final class R {
         public static final int user_arrow_ico=0x7f020031;
     }
     public static final class id {
+        public static final int VIP_back=0x7f060019;
         public static final int container=0x7f060007;
         public static final int info_back=0x7f060000;
         public static final int login_back=0x7f060002;
@@ -94,6 +96,11 @@ public final class R {
         public static final int regist_city=0x7f060016;
         public static final int service_back=0x7f060017;
         public static final int service_dail=0x7f060018;
+        public static final int vip_about=0x7f06001d;
+        public static final int vip_exchange=0x7f06001b;
+        public static final int vip_logout=0x7f06001e;
+        public static final int vip_service=0x7f06001c;
+        public static final int vip_username=0x7f06001a;
     }
     public static final class layout {
         public static final int activity_agreement=0x7f030000;
@@ -112,16 +119,24 @@ public final class R {
         public static final int activity_vip=0x7f03000d;
     }
     public static final class string {
-        public static final int CLIENT_STR=0x7f04001c;
-        public static final int SERVER_STR=0x7f04001b;
-        public static final int URL_IPINFO=0x7f04001d;
+        public static final int CLIENT_STR=0x7f040026;
+        public static final int SERVER_STR=0x7f040025;
+        public static final int URL_IPINFO=0x7f040027;
+        public static final int URL_LOGIN=0x7f040028;
         public static final int about_detail=0x7f04000c;
         public static final int app_name=0x7f040000;
+        public static final int error_msg=0x7f04001e;
+        public static final int key_userid=0x7f040024;
+        public static final int key_username=0x7f040023;
         public static final int locating=0x7f040001;
-        public static final int log_tag=0x7f04001a;
+        public static final int log_tag=0x7f040022;
+        public static final int login_error=0x7f04001c;
+        public static final int login_mobile_empty=0x7f04001a;
         public static final int login_phone=0x7f040015;
         public static final int login_pwd=0x7f040016;
+        public static final int login_pwd_empty=0x7f04001b;
         public static final int login_regist=0x7f040018;
+        public static final int login_success=0x7f04001d;
         public static final int login_sure=0x7f040017;
         public static final int login_text=0x7f040019;
         public static final int main_about=0x7f040007;
@@ -142,6 +157,9 @@ public final class R {
         public static final int service_6=0x7f040012;
         public static final int service_7=0x7f040013;
         public static final int service_8=0x7f040014;
+        public static final int vip_exchange=0x7f040020;
+        public static final int vip_logout=0x7f040021;
+        public static final int vip_title=0x7f04001f;
     }
     public static final class style {
         /** 
