@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/color_white"
     android:orientation="vertical" >
-    
-<!-- 顶部导航栏 -->
+
+    <!-- 顶部导航栏 -->
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -21,7 +22,7 @@
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/bank_home_ico" />
+            android:src="@drawable/bank_ico" />
 
         <TextView
             android:id="@+id/regist_city"
@@ -33,4 +34,250 @@
             android:textColor="@drawable/color_white"
             android:textSize="18sp" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/color_stroke"
+        android:orientation="vertical"
+        android:paddingBottom="1dp" >
+
+        <!-- 会员类别 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/color_white"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="7dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/reg_ico_a" />
+
+            <Spinner
+                android:id="@+id/regist_type"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:requiresFadingEdge="none"  />
+        </LinearLayout>
+
+        <!-- 手机号码 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/color_white"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="7dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/reg_ico_b" />
+
+            <EditText
+                android:id="@+id/regist_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/login_phone_bg"
+                android:hint="@string/login_phone"
+                android:inputType="phone"
+                android:singleLine="true"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <!-- 密码 -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/color_white" >
+
+            <ImageView
+                android:id="@+id/regist_i_pwd"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/reg_ico_c" />
+
+            <EditText
+                android:id="@+id/regist_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/regist_i_pwd"
+                android:background="@drawable/login_phone_bg"
+                android:hint="@string/regist_hint_pwd"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/regist_pwd_see"
+                android:layout_width="30dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ico_eye" />
+        </RelativeLayout>
+
+        <!-- 联系人 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/color_white"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/reg_ico_d" />
+
+            <EditText
+                android:id="@+id/regist_contact"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/login_phone_bg"
+                android:hint="@string/regist_hint_contact"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- 常用邮箱 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/color_white"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/reg_ico_e" />
+
+            <EditText
+                android:id="@+id/regist_mail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/login_phone_bg"
+                android:hint="@string/regist_hint_mail"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- 工作单位 选填 -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/color_white" >
+
+            <ImageView
+                android:id="@+id/regist_i_card"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/reg_ico_c" />
+
+            <EditText
+                android:id="@+id/regist_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/regist_i_card"
+                android:background="@drawable/login_phone_bg"
+                android:hint="@string/regist_hint_card"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:gravity="center"
+                android:text="@string/regist_hint_option"
+                android:textColor="@drawable/color_lightgray"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!-- 用户协议 -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/color_white" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/regist_agres"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/unselect" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/regist_agree"
+                android:textColor="@drawable/color_orange"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- 注册按钮 -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/color_white"
+        android:gravity="center" >
+        <Button 
+            android:id="@+id/regist_submit"
+            android:layout_height="36dp"
+            android:layout_width="170dp"
+            android:text="@string/regist_submit"
+            android:textColor="@drawable/color_white"
+            android:background="@drawable/login_regist_bg"/>
+    </RelativeLayout>
+
 </LinearLayout>

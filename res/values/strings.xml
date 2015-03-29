@@ -21,7 +21,7 @@
     <string name="service_6">\t\t推广服务</string>
     <string name="service_7">\t\t详情请咨询客服热线</string>
     <string name="service_8">\t\t400-114-6668</string>
-    <string name="login_phone">手机</string>
+    <string name="login_phone">手机号码</string>
     <string name="login_pwd">登录密码</string>
     <string name="login_sure">登\t\t录</string>
     <string name="login_regist">注册帐号</string>
@@ -30,21 +30,35 @@
     <string name="login_pwd_empty">密码不能为空</string>
     <string name="login_error">用户名或密码错误，请稍后再试</string>
     <string name="login_success">登录成功</string>
-    <string name="error_msg" >网络连接错误，请稍后再试</string>
+    <string name="error_msg">网络连接错误，请稍后再试</string>
     <string name="vip_title">中农会员</string>
     <string name="vip_exchange">切换帐号</string>
     <string name="vip_logout">退出登录</string>
-    
+    <string name="regist_hint_pwd">6-14位密码，建议由数字、字母组成</string>
+    <string name="regist_hint_contact">联系人姓名</string>
+    <string name="regist_hint_mail">常用邮箱</string>
+    <string name="regist_hint_card">单位名称</string>
+    <string name="regist_hint_option">(可不填)</string>
+    <string name="regist_agree">《中农数据服务协议》</string>
+    <string name="regist_submit">免费注册</string>
+    <string name="regist_contact_tips">联系人姓名不能为空</string>
+    <string name="regist_mail_tips">邮箱不能为空</string>
+    <string name="regist_agree_tips">请选择是否同意服务协议</string>
+    <string name="regist_success">恭喜您！注册成功</string>
+    <string name="agree_agree">同意</string>
+    <string name="agree_title">中农数据服务协议</string>
+    <string name="provider_search">查看</string>
     <string name="log_tag">lynntag</string>
     <string name="key_username">UserName</string>
     <string name="key_userid">UserId</string>
-    
-    
-    
     <string name="SERVER_STR">8Z3anAKeNmQdMnmFFkpa6SElEJQ=</string>
     <string name="CLIENT_STR">1337829</string>
     <string name="URL_IPINFO">http://test.chinaap.com/mobile/admin/ipInfo</string>
     <string name="URL_LOGIN">http://test.chinaap.com/mobile/user/loginUser</string>
+    <string name="URL_USERREGIST">http://test.chinaap.com/mobile/user/userRegister</string>
+    <string name="URL_CITYINFO">http://test.chinaap.com/mobile/admin/cityInfo</string>
+    <string name="URL_TYPEINFO">http://test.chinaap.com/mobile/admin/getCityCategoryInfo</string>
+    <string name="URL_PROVIDERLIST">http://test.chinaap.com/mobile/provider/ia/findProviderList</string>
 
     <drawable name="color_topback">#3588d3</drawable>
     <drawable name="color_white">#ffffff</drawable>

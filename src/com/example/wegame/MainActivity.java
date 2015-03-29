@@ -86,6 +86,17 @@ public class MainActivity extends Activity {
 				Log.d(getString(R.string.log_tag), "I clicked the search btn");
 			}
 		});
+//		点击找供应商
+		RelativeLayout providerLayout =(RelativeLayout)findViewById(R.id.main_provider);
+		providerLayout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent =new Intent();
+				intent.setClass(MainActivity.this, ProviderActivity.class);
+				startActivity(intent);
+			}
+		});
 //		点击关于中农按钮
 		RelativeLayout aboutBtn = (RelativeLayout)this.findViewById(R.id.main_about);
 		aboutBtn.setOnClickListener(new OnClickListener() {

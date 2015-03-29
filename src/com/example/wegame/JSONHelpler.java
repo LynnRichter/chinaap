@@ -37,7 +37,7 @@ public class JSONHelpler {
 
 			if (200 == connection.getResponseCode()) {
 				InputStream instream = connection.getInputStream();
-				byte[] data = new byte[1024];
+				byte[] data = new byte[1024*10];
 				IOUtils.read(instream, data);
 				String jsonStr = new String(data); 
 //				Log.d("","获取到的json字符串："+jsonStr);
@@ -72,7 +72,7 @@ public class JSONHelpler {
 
 			if (200 == connection.getResponseCode()) {
 				InputStream instream = connection.getInputStream();
-				byte[] data = new byte[1024];
+				byte[] data = new byte[1024*10];
 				IOUtils.read(instream, data);
 				String jsonStr = new String(data); 
 				Log.d("","获取到的json字符串："+jsonStr);

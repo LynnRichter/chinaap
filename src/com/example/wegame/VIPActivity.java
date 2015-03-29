@@ -1,6 +1,8 @@
 package com.example.wegame;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +38,21 @@ public class VIPActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				
+				new AlertDialog.Builder(VIPActivity.this)
+				.setTitle("提示")
+				.setMessage("确认切换帐号？")
+				.setPositiveButton("是",new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						Intent intent = new Intent();
+						intent.setClass(VIPActivity.this, LoginActivity.class);
+						startActivity(intent);
+						
+					}
+				})
+				.setNegativeButton("否", null)
+				.show();
 			}
 		});
 //		会员服务
@@ -67,8 +83,26 @@ public class VIPActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-							
+				new AlertDialog.Builder(VIPActivity.this)
+				.setTitle("提示")
+				.setMessage("确认退出帐号？")
+				.setPositiveButton("是",new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						loginOut();
+						finish();
+					}
+				})
+				.setNegativeButton("否", null)
+				.show();
 			}
 		});
+		
+	}
+	private void loginOut() {
+		JSONHelpler.saveString(getApplicationContext(), getString(R.string.key_username),"");
+		JSONHelpler.saveString(getApplicationContext(), getString(R.string.key_userid),"");
+		JSONHelpler.setLogin(getApplicationContext(), false);
 	}
 }

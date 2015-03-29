@@ -18,7 +18,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.wegame.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,6 +35,10 @@
         <activity android:name="com.example.wegame.RegistActivity" >
         </activity>
         <activity android:name="com.example.wegame.VIPActivity" >
+        </activity>
+        <activity android:name="com.example.wegame.AgreementActivity" >
+        </activity>
+        <activity android:name="com.example.wegame.ProviderActivity" >
         </activity>
     </application>
 
