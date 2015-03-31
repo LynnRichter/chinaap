@@ -59,13 +59,13 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/main_search_bg"
                 android:hint="@string/main_search_hint"
-                android:paddingLeft="5dp"
+                android:paddingLeft="10dp"
                 android:singleLine="true" />
 
             <ImageView
                 android:id="@+id/main_search_btn"
-                android:layout_width="30dp"
-                android:layout_height="37dp"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"

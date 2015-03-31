@@ -40,6 +40,8 @@
         </activity>
         <activity android:name="com.example.wegame.ProviderActivity" >
         </activity>
+        <activity android:name="com.example.wegame.ProviderDetailActivity" >
+        </activity>
     </application>
 
 </manifest>

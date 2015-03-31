@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 public class ProviderAdapter extends BaseAdapter {
 
-	private Context context;                        //运行上下文   
 	private List<Map<String, String>> listItems;    //商品信息集合   
 	private LayoutInflater listContainer;           //视图容器   
 	private LoadRemoteImage remoteImage;
@@ -36,7 +35,6 @@ public class ProviderAdapter extends BaseAdapter {
 
 
 	public ProviderAdapter(Context context, List<Map<String, String>> listItems) {   
-		this.context = context;            
 		listContainer = LayoutInflater.from(context);   //创建视图容器并设置上下文   
 		this.listItems = listItems;   
 		remoteImage = new LoadRemoteImage();  
@@ -97,6 +95,7 @@ public class ProviderAdapter extends BaseAdapter {
             @Override  
             public void onRemoteImage(Bitmap image) {  
                 icon.setImageBitmap(image);  
+
             }  
         });  
 		

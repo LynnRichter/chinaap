@@ -49,8 +49,13 @@
     <string name="agree_title">中农数据服务协议</string>
     <string name="provider_search">查看</string>
     <string name="provider_item_main">主营产品：</string>
-    <string name="provider_item_contact">联系人：</string>
-        <string name="provider_item_phone">联系电话：</string>
+    <string name="provider_item_contact">联\t系人：</string>
+    <string name="provider_item_phone">联系电话：</string>
+    <string name="provider_item_address">公司地址：</string>
+    <string name="provider_detail_intro">公司简介</string>
+    <string name="provider_detail_promise">服务承诺</string>
+    <string name="provider_search_hint">按供应商名称搜索</string>
+    <string name="provider_search_title">供应商查询</string>
     
     <string name="log_tag">lynntag</string>
     <string name="key_username">UserName</string>
@@ -71,6 +76,7 @@
     <drawable name="color_stroke">#e4e4e4</drawable>
     <drawable name="color_background">#fafafa</drawable>
     <drawable name="color_lightgray">#999999</drawable>
+    <drawable name="color_grayback">#f5f5f5</drawable>
     <drawable name="color_black">#000000</drawable>
 
 </resources>

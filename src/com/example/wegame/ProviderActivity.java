@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -298,30 +300,23 @@ public class ProviderActivity extends Activity {
 					city_typeTextView.setText(getCityName()+getTypeName()+"供应商有");
 					countTextView.setText((String)msg.obj);
 					listViewAdapter = new ProviderAdapter(ProviderActivity.this, getListItems()); //创建适配器   
-			        listView.setAdapter(listViewAdapter);  
-			        listView.setOnItemSelectedListener(new OnItemSelectedListener(){   
-			          
+			        listView.setAdapter(listViewAdapter);
+			        listView.setOnItemClickListener(new OnItemClickListener() {
 
 						@Override
-						public void onItemSelected(AdapterView<?> arg0,
-								View arg1, int arg2, long arg3) {
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int arg2, long arg3) {
 							// TODO Auto-generated method stub
-							 HashMap<String,String> map=(HashMap<String,String>)getListItems().get(arg2);   
-				                String title=map.get("providerName");   
-				                String content=map.get("providerName");   
-				                Toast.makeText(getApplicationContext(),    
-				                        "你选择了第"+arg2+"个Item，itemTitle的值是："+title+"itemContent的值是:"+content,   
-				                        Toast.LENGTH_SHORT).show();   
+							HashMap<String,String> map=(HashMap<String,String>)getListItems().get(arg2);   
+							Intent intent = new Intent();
+							intent.setClass(ProviderActivity.this, ProviderDetailActivity.class);
+							intent.putExtra("Item", map);
+							startActivity(intent);
+							
+				            
 							
 						}
-
-						@Override
-						public void onNothingSelected(AdapterView<?> arg0) {
-							// TODO Auto-generated method stub
-							
-						}   
-			               
-			        });
+					});
 					break;
 				case DATA_ERROR:
 					toast = Toast.makeText(getApplicationContext(),
@@ -384,6 +379,8 @@ public class ProviderActivity extends Activity {
 							map.put("contact", item.getString("contact"));
 							map.put("contactNumber", item.getString("contactNumber"));
 							map.put("companyAddress", item.getString("companyAddress"));
+							map.put("introduction", item.getString("introduction"));
+							map.put("promise", item.getString("promise"));
 							getListItems().add(map);
 						}
 						
