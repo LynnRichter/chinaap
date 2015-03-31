@@ -21,6 +21,8 @@ import android.R.bool;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class JSONHelpler {
@@ -150,7 +152,8 @@ public class JSONHelpler {
 		}
 		return null;
 	}
-	//±£´æ×Ö·û´®
+	
+//	±£´æ×Ö·û´®
 	public static void saveString(Context ctx, String key,String value) {
 		SharedPreferences userPreferences = ctx.getSharedPreferences("UserInfo", 0);
 		Editor editor = userPreferences.edit();

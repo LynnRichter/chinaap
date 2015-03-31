@@ -48,6 +48,10 @@
     <string name="agree_agree">同意</string>
     <string name="agree_title">中农数据服务协议</string>
     <string name="provider_search">查看</string>
+    <string name="provider_item_main">主营产品：</string>
+    <string name="provider_item_contact">联系人：</string>
+        <string name="provider_item_phone">联系电话：</string>
+    
     <string name="log_tag">lynntag</string>
     <string name="key_username">UserName</string>
     <string name="key_userid">UserId</string>
@@ -67,5 +71,6 @@
     <drawable name="color_stroke">#e4e4e4</drawable>
     <drawable name="color_background">#fafafa</drawable>
     <drawable name="color_lightgray">#999999</drawable>
+    <drawable name="color_black">#000000</drawable>
 
 </resources>

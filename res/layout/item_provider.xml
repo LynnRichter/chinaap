@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/color_white" >
+
+    <ImageView
+        android:id="@+id/provider_item_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/demo" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <!-- 供应商名字 -->
+
+        <TextView
+            android:id="@+id/provider_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@drawable/color_black"
+            android:textSize="14sp" />
+        <!-- 主营商品 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/provider_item_main"
+                android:textColor="@drawable/color_text"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/provider_item_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@drawable/color_text"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- 联系人 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/provider_item_contact"
+                android:textColor="@drawable/color_text"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/provider_item_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@drawable/color_text"
+                android:textSize="12sp" />
+        </LinearLayout>
+        <!-- 联系电话 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/provider_item_phone"
+                android:textColor="@drawable/color_text"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/provider_item_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@drawable/color_orange"
+                android:textSize="12sp" />
+        </LinearLayout>
+        <!-- 公司地址 -->
+
+        <TextView
+            android:id="@+id/provider_item_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@drawable/color_text"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</LinearLayout>

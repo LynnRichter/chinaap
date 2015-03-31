@@ -1,7 +1,9 @@
 package com.example.wegame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,9 +19,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +51,10 @@ public class ProviderActivity extends Activity {
 
 	private Handler dataHandler = null;
 	private String tyepID,cityID,typeName,cityName;
+	private ProviderAdapter listViewAdapter; 
+	private ListView listView;
+	private List<Map<String,String>> listItems;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceStateBundle) {
 		super.onCreate(savedInstanceStateBundle);
@@ -60,6 +68,11 @@ public class ProviderActivity extends Activity {
 		typeSpinner = (Spinner)findViewById(R.id.provider_spinner_category);
 		final TextView city_typeTextView=(TextView)findViewById(R.id.provider_city_type);
 		final TextView countTextView =(TextView)findViewById(R.id.provider_count);
+		listView = (ListView)findViewById(R.id.provider_list);
+		
+
+		
+
 		ImageView backView = (ImageView)this.findViewById(R.id.provider_back);
 		backView.setOnClickListener(new OnClickListener() {
 
@@ -88,10 +101,10 @@ public class ProviderActivity extends Activity {
 
 							setCityID(cityidlist.get(arg2)); 
 							setCityName(cityAdapter.getItem(arg2));
-//							Toast toast = Toast.makeText(getApplicationContext(),
-//									"您选择的城市是："+ cityAdapter.getItem(arg2)+"& ID= "+cityidlist.get(arg2), Toast.LENGTH_LONG);
-//							toast.setGravity(Gravity.CENTER, 0, 0);
-//							toast.show();
+							//							Toast toast = Toast.makeText(getApplicationContext(),
+							//									"您选择的城市是："+ cityAdapter.getItem(arg2)+"& ID= "+cityidlist.get(arg2), Toast.LENGTH_LONG);
+							//							toast.setGravity(Gravity.CENTER, 0, 0);
+							//							toast.show();
 							arg0.setVisibility(View.VISIBLE);   
 							typelist.clear();
 							typeidlist.clear();
@@ -187,12 +200,12 @@ public class ProviderActivity extends Activity {
 
 							setTyepID(typeidlist.get(arg2)); 
 							setTypeName(typeAdapter.getItem(arg2));
-//							Toast toast = Toast.makeText(getApplicationContext(),
-//									"您选择的类别是："+ typeAdapter.getItem(arg2)+"& ID= "+typeidlist.get(arg2), Toast.LENGTH_LONG);
-//							toast.setGravity(Gravity.CENTER, 0, 0);
-//							toast.show();
+							//							Toast toast = Toast.makeText(getApplicationContext(),
+							//									"您选择的类别是："+ typeAdapter.getItem(arg2)+"& ID= "+typeidlist.get(arg2), Toast.LENGTH_LONG);
+							//							toast.setGravity(Gravity.CENTER, 0, 0);
+							//							toast.show();
 							arg0.setVisibility(View.VISIBLE); 
-							
+
 						}    
 						public void onNothingSelected(AdapterView<?> arg0) {    
 							arg0.setVisibility(View.VISIBLE);    
@@ -225,7 +238,6 @@ public class ProviderActivity extends Activity {
 			}
 		};
 		typeRunnable = new Runnable() {
-
 			@Override
 			public void run() {
 				Message msg = new Message();
@@ -236,7 +248,7 @@ public class ProviderActivity extends Activity {
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_TYPEINFO)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
-//					Log.d(getString(R.string.log_tag), "typeData："+datasString);
+					//					Log.d(getString(R.string.log_tag), "typeData："+datasString);
 					if (datasString.length() == 0) {
 						msg.what = TYPE_ERROR;
 						msg.obj = retJsonObject.getString("info");
@@ -264,17 +276,17 @@ public class ProviderActivity extends Activity {
 
 			}
 		};
-		
-		
+
+
 		Button searchButton = (Button)findViewById(R.id.provider_button_start);
 		searchButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				startLoad();
 			}
 		});
-		
+
 		dataHandler = new Handler()
 		{
 			@Override
@@ -285,6 +297,31 @@ public class ProviderActivity extends Activity {
 				case DATA_SUCCESS:
 					city_typeTextView.setText(getCityName()+getTypeName()+"供应商有");
 					countTextView.setText((String)msg.obj);
+					listViewAdapter = new ProviderAdapter(ProviderActivity.this, getListItems()); //创建适配器   
+			        listView.setAdapter(listViewAdapter);  
+			        listView.setOnItemSelectedListener(new OnItemSelectedListener(){   
+			          
+
+						@Override
+						public void onItemSelected(AdapterView<?> arg0,
+								View arg1, int arg2, long arg3) {
+							// TODO Auto-generated method stub
+							 HashMap<String,String> map=(HashMap<String,String>)getListItems().get(arg2);   
+				                String title=map.get("providerName");   
+				                String content=map.get("providerName");   
+				                Toast.makeText(getApplicationContext(),    
+				                        "你选择了第"+arg2+"个Item，itemTitle的值是："+title+"itemContent的值是:"+content,   
+				                        Toast.LENGTH_SHORT).show();   
+							
+						}
+
+						@Override
+						public void onNothingSelected(AdapterView<?> arg0) {
+							// TODO Auto-generated method stub
+							
+						}   
+			               
+			        });
 					break;
 				case DATA_ERROR:
 					toast = Toast.makeText(getApplicationContext(),
@@ -313,10 +350,13 @@ public class ProviderActivity extends Activity {
 	}
 	private void startLoad()
 	{
+		
 		Runnable dataRunnable = new Runnable() {
-			
+
 			@Override
 			public void run() {
+				List<Map<String, String>> listitems = new ArrayList<Map<String, String>>();  
+				setListItems(listitems);
 				Message msg = new Message();
 				StringBuffer parBuffer  = new StringBuffer();
 				parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
@@ -326,20 +366,27 @@ public class ProviderActivity extends Activity {
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PROVIDERLIST)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
-//					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
+					//					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
+					//					Log.d(getString(R.string.log_tag), "ProviderData："+datasString);
 
-//					Log.d(getString(R.string.log_tag), "ProviderData："+datasString);
-					
 					if (datasString.length() == 0) {
 						msg.what = DATA_ERROR;
 						msg.obj = retJsonObject.getString("info");
 					}else {
 
 						JSONArray jsonArray = retJsonObject.getJSONArray("data");
-//						for (int i=0;i<jsonArray.length();i++) {
-//							JSONObject item = jsonArray.getJSONObject(i);
-//							
-//						}
+						for (int i=0;i<jsonArray.length();i++) {
+							JSONObject item = jsonArray.getJSONObject(i);
+							Map<String, String> map = new HashMap<String, String>();
+							map.put("imageurl", item.getString("imageurl"));
+							map.put("providerName", item.getString("providerName"));
+							map.put("mainProduct", item.getString("mainProduct"));
+							map.put("contact", item.getString("contact"));
+							map.put("contactNumber", item.getString("contactNumber"));
+							map.put("companyAddress", item.getString("companyAddress"));
+							getListItems().add(map);
+						}
+						
 						msg.what = DATA_SUCCESS;
 						msg.obj = retJsonObject.getString("total");
 
@@ -381,6 +428,12 @@ public class ProviderActivity extends Activity {
 	}
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+	public List<Map<String,String>> getListItems() {
+		return listItems;
+	}
+	public void setListItems(List<Map<String,String>> listItems) {
+		this.listItems = listItems;
 	}
 
 }
