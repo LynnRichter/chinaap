@@ -26,6 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.wegame.PriceActivity" >
+        </activity>
         <activity android:name="com.example.wegame.InfoActivity" >
         </activity>
         <activity android:name="com.example.wegame.ServiceActivity" >
@@ -41,6 +43,8 @@
         <activity android:name="com.example.wegame.ProviderActivity" >
         </activity>
         <activity android:name="com.example.wegame.ProviderDetailActivity" >
+        </activity>
+        <activity android:name="com.example.wegame.ProviderSearchActivity" >
         </activity>
     </application>
 

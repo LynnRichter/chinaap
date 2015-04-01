@@ -56,7 +56,7 @@
     <string name="provider_detail_promise">服务承诺</string>
     <string name="provider_search_hint">按供应商名称搜索</string>
     <string name="provider_search_title">供应商查询</string>
-    
+    <string name="price_search_tips">未登录只能查看三个月前的数据，请登录</string>
     <string name="log_tag">lynntag</string>
     <string name="key_username">UserName</string>
     <string name="key_userid">UserId</string>
@@ -68,6 +68,8 @@
     <string name="URL_CITYINFO">http://test.chinaap.com/mobile/admin/cityInfo</string>
     <string name="URL_TYPEINFO">http://test.chinaap.com/mobile/admin/getCityCategoryInfo</string>
     <string name="URL_PROVIDERLIST">http://test.chinaap.com/mobile/provider/ia/findProviderList</string>
+    <string name="URL_PROVIDERSEARCH">http://test.chinaap.com/mobile/provider/ia/findProviderList</string>
+    <string name="URL_PRICEINFO">http://test.chinaap.com/mobile/admin/priceInfo</string>
 
     <drawable name="color_topback">#3588d3</drawable>
     <drawable name="color_white">#ffffff</drawable>

@@ -13,10 +13,12 @@
         android:background="@drawable/color_topback" >
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="fill_parent"
+            android:id="@+id/price_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:contentDescription="@string/pic_placehold"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
@@ -24,8 +26,7 @@
             android:src="@drawable/bank_home_ico" />
 
         <TextView
-            android:id="@+id/main_city"
-            android:layout_width="60dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:gravity="center"
@@ -34,17 +35,18 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="fill_parent"
+            android:id="@+id/price_search"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:contentDescription="@string/pic_placehold"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
             android:scaleType="fitCenter"
             android:src="@drawable/head_search_ico" />
     </RelativeLayout>
-   
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -57,43 +59,47 @@
         android:paddingTop="2dp" >
 
         <Spinner
-            android:id="@+id/price_spinner_category"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="2dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="2dp"
-            android:layout_weight="1"
-            android:background="@drawable/price_spinner_bg" />
-
-        <Spinner
             android:id="@+id/price_spinner_city"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/price_spinner_bg" />
 
         <Spinner
-            android:id="@+id/price_spinner_date"
+            android:id="@+id/price_spinner_category"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/price_spinner_bg" />
+
+        <TextView
+            android:id="@+id/price_btn_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/price_spinner_bg"
+            android:textColor="@drawable/color_black"
+            android:gravity="center" />
 
         <Button
             android:id="@+id/price_button_start"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/main_price_start_bg"
             android:gravity="center"
-            android:text="@string/price_start"
+            android:text="@string/provider_search"
             android:textColor="@drawable/color_white"
             android:textSize="14sp" />
     </LinearLayout>

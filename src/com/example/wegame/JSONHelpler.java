@@ -11,6 +11,8 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 
 import org.apache.commons.io.IOUtils;
@@ -39,7 +41,7 @@ public class JSONHelpler {
 
 			if (200 == connection.getResponseCode()) {
 				InputStream instream = connection.getInputStream();
-				byte[] data = new byte[1024*10];
+				byte[] data = new byte[1024*100];
 				IOUtils.read(instream, data);
 				String jsonStr = new String(data); 
 //				Log.d("","获取到的json字符串："+jsonStr);
@@ -74,7 +76,7 @@ public class JSONHelpler {
 
 			if (200 == connection.getResponseCode()) {
 				InputStream instream = connection.getInputStream();
-				byte[] data = new byte[1024*10];
+				byte[] data = new byte[1024*100];
 				IOUtils.read(instream, data);
 				String jsonStr = new String(data); 
 				Log.d("","获取到的json字符串："+jsonStr);
@@ -151,6 +153,27 @@ public class JSONHelpler {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	/**
+	 * 获取两个日期之间的间隔天数
+	 * @return
+	 */
+	public static int getGapCount(Date startDate, Date endDate) {
+        Calendar fromCalendar = Calendar.getInstance();  
+        fromCalendar.setTime(startDate);  
+        fromCalendar.set(Calendar.HOUR_OF_DAY, 0);  
+        fromCalendar.set(Calendar.MINUTE, 0);  
+        fromCalendar.set(Calendar.SECOND, 0);  
+        fromCalendar.set(Calendar.MILLISECOND, 0);  
+  
+        Calendar toCalendar = Calendar.getInstance();  
+        toCalendar.setTime(endDate);  
+        toCalendar.set(Calendar.HOUR_OF_DAY, 0);  
+        toCalendar.set(Calendar.MINUTE, 0);  
+        toCalendar.set(Calendar.SECOND, 0);  
+        toCalendar.set(Calendar.MILLISECOND, 0);  
+  
+        return (int) ((toCalendar.getTime().getTime() - fromCalendar.getTime().getTime()) / (1000 * 60 * 60 * 24));
 	}
 	
 //	保存字符串

@@ -83,7 +83,16 @@ public class ProviderActivity extends Activity {
 				finish();				
 			}
 		});
-
+		ImageView searchView =(ImageView)findViewById(R.id.provider_search);
+		searchView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent();
+				intent.setClass(ProviderActivity.this, ProviderSearchActivity.class);
+				startActivity(intent);
+			}
+		});
 
 		final Handler cityHandler = new Handler()
 		{
