@@ -57,6 +57,14 @@
     <string name="provider_search_hint">按供应商名称搜索</string>
     <string name="provider_search_title">供应商查询</string>
     <string name="price_search_tips">未登录只能查看三个月前的数据，请登录</string>
+    <string name="price_name">品名</string>
+    <string name="price_spec">规格</string>
+    <string name="price_rprice">批发价</string>
+    <string name="price_unit">单位</string>
+    <string name="price_priceIndex">购买指数</string>
+    <string name="price_marketShort">价格来源</string>
+    <string name="price_releaseDate">报价日期</string>
+    <string name="price_list">采购清单</string>
     <string name="log_tag">lynntag</string>
     <string name="key_username">UserName</string>
     <string name="key_userid">UserId</string>

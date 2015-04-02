@@ -13,23 +13,33 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.wegame.LHScrollView.OnScrollChangedListener;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,9 +68,11 @@ public class PriceActivity extends Activity{
 
 	private Handler dataHandler = null;
 	private String tyepID,cityID,typeName,cityName,dateString,timestamp,sortIndex;
-	//	private ProviderAdapter listViewAdapter; 
-	//	private ListView listView;
+	private PriceAdapter listViewAdapter; 
+	private ListView listView;
 	private List<Map<String,String>> listItems;
+	private RelativeLayout headView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceStateBundle) {
 		super.onCreate(savedInstanceStateBundle);
@@ -68,11 +80,31 @@ public class PriceActivity extends Activity{
 		setContentView(getLayoutInflater().inflate(R.layout.activity_price, null));
 		UIFactory();
 	}
+	class ListViewAndHeadViewTouchLinstener implements View.OnTouchListener {
+
+		@Override
+		public boolean onTouch(View arg0, MotionEvent arg1) {
+			//当在列头 和 listView控件上touch时，将这个touch的事件分发给 ScrollView
+			HorizontalScrollView headSrcrollView = (HorizontalScrollView) headView
+					.findViewById(R.id.horizontalScrollView1);
+			headSrcrollView.onTouchEvent(arg1);
+			return false;
+		}
+	}
 	private void UIFactory()
 	{
 
 		citySpinner = (Spinner)findViewById(R.id.price_spinner_city);
 		typeSpinner = (Spinner)findViewById(R.id.price_spinner_category);
+		headView =(RelativeLayout)findViewById(R.id.price_head);
+		headView.setFocusable(true);
+		headView.setClickable(true);
+		headView.setOnTouchListener(new ListViewAndHeadViewTouchLinstener());
+		listView =(ListView)findViewById(R.id.price_content_list);
+		listView.setOnTouchListener(new ListViewAndHeadViewTouchLinstener());
+
+
+
 
 		final TextView dateView =(TextView)findViewById(R.id.price_btn_date);
 		SimpleDateFormat formatter = new SimpleDateFormat   ("yyyy-MM-dd");     
@@ -344,10 +376,10 @@ public class PriceActivity extends Activity{
 								getString(R.string.price_search_tips), Toast.LENGTH_LONG);
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						toast.show();
-//						Thread.sleep(3000);
-//						Intent intent = new Intent();
-//						intent.setClass(PriceActivity.this, LoginActivity.class);
-//						startActivity(intent);
+						//						Thread.sleep(3000);
+						//						Intent intent = new Intent();
+						//						intent.setClass(PriceActivity.this, LoginActivity.class);
+						//						startActivity(intent);
 
 					}
 					else{
@@ -358,13 +390,12 @@ public class PriceActivity extends Activity{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
-//				catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				//				catch (InterruptedException e) {
+				//					// TODO Auto-generated catch block
+				//					e.printStackTrace();
+				//				}
 
 
-				//				startLoad();
 			}
 		});
 
@@ -376,26 +407,25 @@ public class PriceActivity extends Activity{
 				Toast toast = null;
 				switch (msg.what) {
 				case DATA_SUCCESS:
-					//					city_typeTextView.setText(getCityName()+getTypeName()+"供应商有");
-					//					countTextView.setText((String)msg.obj);
-					//					listViewAdapter = new ProviderAdapter(ProviderActivity.this, getListItems()); //创建适配器   
-					//			        listView.setAdapter(listViewAdapter);
-					//			        listView.setOnItemClickListener(new OnItemClickListener() {
-					//
-					//						@Override
-					//						public void onItemClick(AdapterView<?> arg0, View arg1,
-					//								int arg2, long arg3) {
-					//							// TODO Auto-generated method stub
-					//							HashMap<String,String> map=(HashMap<String,String>)getListItems().get(arg2);   
-					//							Intent intent = new Intent();
-					//							intent.setClass(ProviderActivity.this, ProviderDetailActivity.class);
-					//							intent.putExtra("Item", map);
-					//							startActivity(intent);
-					//							
-					//				            
-					//							
-					//						}
-					//					});
+
+					listViewAdapter = new PriceAdapter(PriceActivity.this,R.layout.item_price); //创建适配器   
+					listView.setAdapter(listViewAdapter);
+					listView.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int arg2, long arg3) {
+							// TODO Auto-generated method stub
+							//							HashMap<String,String> map=(HashMap<String,String>)getListItems().get(arg2);   
+							//							Intent intent = new Intent();
+							//							intent.setClass(PriceActivity.this, ProviderDetailActivity.class);
+							//							intent.putExtra("Item", map);
+							//							startActivity(intent);
+
+
+
+						}
+					});
 					break;
 				case DATA_ERROR:
 					toast = Toast.makeText(getApplicationContext(),
@@ -443,27 +473,26 @@ public class PriceActivity extends Activity{
 				try {
 					String datasString = retJsonObject.getString("data");
 					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
-					Log.d(getString(R.string.log_tag), "ProviderData："+datasString);
+					//					Log.d(getString(R.string.log_tag), "ProviderData："+datasString);
 
 					if (datasString.length() == 0) {
 						msg.what = DATA_ERROR;
 						msg.obj = retJsonObject.getString("info");
 					}else {
 
-						//						JSONArray jsonArray = retJsonObject.getJSONArray("data");
-						//						for (int i=0;i<jsonArray.length();i++) {
-						//							JSONObject item = jsonArray.getJSONObject(i);
-						//							Map<String, String> map = new HashMap<String, String>();
-						//							map.put("imageurl", item.getString("imageurl"));
-						//							map.put("providerName", item.getString("providerName"));
-						//							map.put("mainProduct", item.getString("mainProduct"));
-						//							map.put("contact", item.getString("contact"));
-						//							map.put("contactNumber", item.getString("contactNumber"));
-						//							map.put("companyAddress", item.getString("companyAddress"));
-						//							map.put("introduction", item.getString("introduction"));
-						//							map.put("promise", item.getString("promise"));
-						//							getListItems().add(map);
-						//					}
+						JSONArray jsonArray = retJsonObject.getJSONArray("data");
+						for (int i=0;i<jsonArray.length();i++) {
+							JSONObject item = jsonArray.getJSONObject(i);
+							Map<String, String> map = new HashMap<String, String>();
+							map.put("productName", item.getString("productName"));
+							map.put("spec", item.getString("spec"));
+							map.put("rprice", item.getString("rprice"));
+							map.put("unit", item.getString("unit"));
+							map.put("priceIndex", item.getString("priceIndex"));
+							map.put("marketShort", item.getString("marketShort"));
+							map.put("releaseDate", item.getString("releaseDate"));
+							getListItems().add(map);
+						}
 
 						msg.what = DATA_SUCCESS;
 						msg.obj = retJsonObject.getString("total");
@@ -483,6 +512,7 @@ public class PriceActivity extends Activity{
 		};
 		new Thread(dataRunnable).start();
 	}
+
 	public String getTyepID() {
 		return tyepID;
 	}
@@ -525,4 +555,106 @@ public class PriceActivity extends Activity{
 	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
+
+
+	public class PriceAdapter extends BaseAdapter {
+		public List<ViewHolder> mHolderList = new ArrayList<ViewHolder>();
+
+		int id_row_layout;
+		LayoutInflater mInflater;
+
+		public PriceAdapter(Context context, int id_row_layout) {
+			super();
+			this.id_row_layout = id_row_layout;
+			mInflater = LayoutInflater.from(context);
+
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return getListItems().size();
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int arg0) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parentView) {
+			ViewHolder holder = null;
+			if (convertView == null) {
+				synchronized (PriceActivity.this) {
+					convertView = mInflater.inflate(id_row_layout, null);
+					holder = new ViewHolder();
+
+					LHScrollView scrollView1 = (LHScrollView) convertView
+							.findViewById(R.id.horizontalScrollView1);
+
+					holder.scrollView = scrollView1;
+
+
+					LHScrollView headSrcrollView = (LHScrollView) headView
+							.findViewById(R.id.horizontalScrollView1);
+					headSrcrollView.AddOnScrollChangedListener(new OnScrollChangedListenerImp(
+							scrollView1));
+					holder.name_text =(TextView) convertView.findViewById(R.id.item_price_name);
+					holder.spec_text =(TextView) convertView.findViewById(R.id.item_price_spec);
+					holder.rprice_text =(TextView) convertView.findViewById(R.id.item_price_rprice);
+					holder.unit_text =(TextView) convertView.findViewById(R.id.item_price_unit);
+					holder.priceIndex_text =(TextView) convertView.findViewById(R.id.item_price_priceIndex);
+					holder.marketShort_text =(TextView) convertView.findViewById(R.id.item_price_marketShort);
+					holder.releaseDate_text =(TextView) convertView.findViewById(R.id.item_price_releaseDate);
+					convertView.setTag(holder);
+					mHolderList.add(holder);
+				}
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			holder.name_text.setText(getListItems().get(position).get("productName"));
+			holder.spec_text.setText(getListItems().get(position).get("spec"));
+			holder.rprice_text.setText(getListItems().get(position).get("rprice"));
+			holder.unit_text.setText(getListItems().get(position).get("unit"));
+			holder.priceIndex_text.setText(getListItems().get(position).get("priceIndex"));
+			holder.marketShort_text.setText(getListItems().get(position).get("marketShort"));
+			holder.releaseDate_text.setText(getListItems().get(position).get("releaseDate"));
+
+			return convertView;
+		}
+
+		class OnScrollChangedListenerImp implements OnScrollChangedListener {
+
+			LHScrollView mScrollViewArg;
+
+			public OnScrollChangedListenerImp(LHScrollView scrollViewar) {
+				mScrollViewArg = scrollViewar;
+			}
+
+			@Override
+			public void onScrollChanged(int l, int t, int oldl, int oldt) {
+				mScrollViewArg.smoothScrollTo(l, t);
+			}
+		};
+
+		class ViewHolder {
+			TextView name_text;
+			TextView spec_text;
+			TextView rprice_text;
+			TextView unit_text;
+			TextView priceIndex_text;
+			TextView marketShort_text;
+			TextView releaseDate_text;
+			TextView list_text;
+
+			HorizontalScrollView scrollView;
+		}
+	}// end class 
 }
