@@ -65,6 +65,7 @@
     <string name="price_marketShort">价格来源</string>
     <string name="price_releaseDate">报价日期</string>
     <string name="price_list">采购清单</string>
+    <string name="price_addlist">加入清单</string>
     <string name="log_tag">lynntag</string>
     <string name="key_username">UserName</string>
     <string name="key_userid">UserId</string>
@@ -78,6 +79,7 @@
     <string name="URL_PROVIDERLIST">http://test.chinaap.com/mobile/provider/ia/findProviderList</string>
     <string name="URL_PROVIDERSEARCH">http://test.chinaap.com/mobile/provider/ia/findProviderList</string>
     <string name="URL_PRICEINFO">http://test.chinaap.com/mobile/admin/priceInfo</string>
+    <string name="URL_FINDPRICE">http://test.chinaap.com/mobile/product/findProductList</string>
 
     <drawable name="color_topback">#3588d3</drawable>
     <drawable name="color_white">#ffffff</drawable>
@@ -88,5 +90,7 @@
     <drawable name="color_lightgray">#999999</drawable>
     <drawable name="color_grayback">#f5f5f5</drawable>
     <drawable name="color_black">#000000</drawable>
+    <drawable name="color_textRed">#ff0000</drawable>
+    <drawable name="color_purple">#a700b1</drawable>
 
 </resources>

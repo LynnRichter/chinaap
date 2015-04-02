@@ -45,6 +45,6 @@ public class InterceptScrollContainer extends LinearLayout {
 //	public boolean onTouchEvent(MotionEvent event) {
 //		// TODO Auto-generated method stub
 //		Log.i("pdwy","ScrollContainer onTouchEvent");
-//		return true;
+//		return false;
 //	}
 }

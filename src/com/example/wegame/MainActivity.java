@@ -16,12 +16,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class MainActivity extends Activity {
 
@@ -83,7 +86,20 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				Log.d(getString(R.string.log_tag), "I clicked the search btn");
+				
+			}
+		});
+		
+		final EditText editText =(EditText)findViewById(R.id.main_search);
+		editText.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+				Intent intent = new Intent();
+				intent.putExtra("InputKey", editText.getText().toString());
+				intent.setClass(MainActivity.this, PriceSearchResultActivity.class);
+				startActivity(intent);
+				return false;
 			}
 		});
 //		点击查价格

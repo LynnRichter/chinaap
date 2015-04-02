@@ -71,9 +71,9 @@ public class ProviderActivity extends Activity {
 		final TextView city_typeTextView=(TextView)findViewById(R.id.provider_city_type);
 		final TextView countTextView =(TextView)findViewById(R.id.provider_count);
 		listView = (ListView)findViewById(R.id.provider_list);
-		
 
-		
+
+
 
 		ImageView backView = (ImageView)this.findViewById(R.id.provider_back);
 		backView.setOnClickListener(new OnClickListener() {
@@ -85,7 +85,7 @@ public class ProviderActivity extends Activity {
 		});
 		ImageView searchView =(ImageView)findViewById(R.id.provider_search);
 		searchView.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent();
@@ -309,8 +309,8 @@ public class ProviderActivity extends Activity {
 					city_typeTextView.setText(getCityName()+getTypeName()+"供应商有");
 					countTextView.setText((String)msg.obj);
 					listViewAdapter = new ProviderAdapter(ProviderActivity.this, getListItems()); //创建适配器   
-			        listView.setAdapter(listViewAdapter);
-			        listView.setOnItemClickListener(new OnItemClickListener() {
+					listView.setAdapter(listViewAdapter);
+					listView.setOnItemClickListener(new OnItemClickListener() {
 
 						@Override
 						public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -321,9 +321,9 @@ public class ProviderActivity extends Activity {
 							intent.setClass(ProviderActivity.this, ProviderDetailActivity.class);
 							intent.putExtra("Item", map);
 							startActivity(intent);
-							
-				            
-							
+
+
+
 						}
 					});
 					break;
@@ -354,7 +354,7 @@ public class ProviderActivity extends Activity {
 	}
 	private void startLoad()
 	{
-		
+
 		Runnable dataRunnable = new Runnable() {
 
 			@Override
@@ -370,8 +370,8 @@ public class ProviderActivity extends Activity {
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PROVIDERLIST)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
-					//					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
-					//					Log.d(getString(R.string.log_tag), "ProviderData："+datasString);
+					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
+					Log.d(getString(R.string.log_tag), "ProviderData："+datasString);
 
 					if (datasString.length() == 0) {
 						msg.what = DATA_ERROR;
@@ -392,7 +392,7 @@ public class ProviderActivity extends Activity {
 							map.put("promise", item.getString("promise"));
 							getListItems().add(map);
 						}
-						
+
 						msg.what = DATA_SUCCESS;
 						msg.obj = retJsonObject.getString("total");
 

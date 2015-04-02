@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,16 +36,18 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class PriceActivity extends Activity{
+public class PriceSearchResultActivity extends Activity{
 	private Spinner citySpinner;
 	private List<String> citylist = new ArrayList<String>(); 
 	private List<String> cityidlist = new ArrayList<String>();
@@ -71,12 +74,12 @@ public class PriceActivity extends Activity{
 	private ListView listView;
 	private List<Map<String,String>> listItems;
 	private RelativeLayout headView;
-
+	private EditText editText;
 	@Override
 	protected void onCreate(Bundle savedInstanceStateBundle) {
 		super.onCreate(savedInstanceStateBundle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(getLayoutInflater().inflate(R.layout.activity_price, null));
+		setContentView(getLayoutInflater().inflate(R.layout.activity_price_search, null));
 		UIFactory();
 	}
 	class ListViewAndHeadViewTouchLinstener implements View.OnTouchListener {
@@ -93,19 +96,29 @@ public class PriceActivity extends Activity{
 	private void UIFactory()
 	{
 
-		citySpinner = (Spinner)findViewById(R.id.price_spinner_city);
-		typeSpinner = (Spinner)findViewById(R.id.price_spinner_category);
-		headView =(RelativeLayout)findViewById(R.id.price_head);
+		citySpinner = (Spinner)findViewById(R.id.price_search_spinner_city);
+		typeSpinner = (Spinner)findViewById(R.id.price_search_spinner_category);
+		headView =(RelativeLayout)findViewById(R.id.price_search_head);
 		headView.setFocusable(true);
 		headView.setClickable(true);
 		headView.setOnTouchListener(new ListViewAndHeadViewTouchLinstener());
-		listView =(ListView)findViewById(R.id.price_content_list);
+		listView =(ListView)findViewById(R.id.price_search_content_list);
 		listView.setOnTouchListener(new ListViewAndHeadViewTouchLinstener());
 
+		editText =(EditText)findViewById(R.id.price_search_input);
+		Intent intent =getIntent();
+		editText.setText(intent.getStringExtra("InputKey"));
+		editText.setOnEditorActionListener(new OnEditorActionListener() {
+
+			@Override
+			public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+				startLoad();
+				return false;
+			}
+		});
 
 
-
-		final TextView dateView =(TextView)findViewById(R.id.price_btn_date);
+		final TextView dateView =(TextView)findViewById(R.id.price_search_btn_date);
 		SimpleDateFormat formatter = new SimpleDateFormat   ("yyyy-MM-dd");     
 		Date curDate = new Date(System.currentTimeMillis());//获取当前时间     
 		String str = formatter.format(curDate);
@@ -118,7 +131,7 @@ public class PriceActivity extends Activity{
 			public void onClick(View arg0) {
 				Calendar calendar = Calendar.getInstance();
 				// TODO Auto-generated method stub
-				DatePickerDialog dialog = new DatePickerDialog(PriceActivity.this, new DatePickerDialog.OnDateSetListener() {
+				DatePickerDialog dialog = new DatePickerDialog(PriceSearchResultActivity.this, new DatePickerDialog.OnDateSetListener() {
 
 					@Override
 					public void onDateSet(DatePicker arg0, int year, int month, int day) {
@@ -143,7 +156,7 @@ public class PriceActivity extends Activity{
 			}
 		});
 
-		ImageView backView = (ImageView)this.findViewById(R.id.price_back);
+		ImageView backView = (ImageView)this.findViewById(R.id.price_search_back);
 		backView.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -151,21 +164,6 @@ public class PriceActivity extends Activity{
 				finish();				
 			}
 		});
-		ImageView searchView =(ImageView)findViewById(R.id.price_search);
-		searchView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent();
-				intent.putExtra("InputKey", "");
-				intent.setClass(PriceActivity.this, PriceSearchResultActivity.class);
-				startActivity(intent);
-			}
-		});
-
-
-
-
 
 		final Handler cityHandler = new Handler()
 		{
@@ -175,7 +173,7 @@ public class PriceActivity extends Activity{
 				Toast toast = null;
 				switch (msg.what) {
 				case CITY_SUCCESS:
-					cityAdapter = new ArrayAdapter<String>(PriceActivity.this, android.R.layout.simple_spinner_item, citylist);
+					cityAdapter = new ArrayAdapter<String>(PriceSearchResultActivity.this, android.R.layout.simple_spinner_item, citylist);
 					cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);    
 					//第四步：将适配器添加到下拉列表上    
 					citySpinner.setAdapter(cityAdapter);
@@ -274,7 +272,7 @@ public class PriceActivity extends Activity{
 				Toast toast = null;
 				switch (msg.what) {
 				case TYPE_SUCCESS:
-					typeAdapter = new ArrayAdapter<String>(PriceActivity.this, android.R.layout.simple_spinner_item, typelist);
+					typeAdapter = new ArrayAdapter<String>(PriceSearchResultActivity.this, android.R.layout.simple_spinner_item, typelist);
 					typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);    
 					//第四步：将适配器添加到下拉列表上    
 					typeSpinner.setAdapter(typeAdapter);
@@ -367,11 +365,11 @@ public class PriceActivity extends Activity{
 			{
 
 				Intent intent  = new Intent();
-				intent.setClass(PriceActivity.this, LoginActivity.class);
+				intent.setClass(PriceSearchResultActivity.this, LoginActivity.class);
 				startActivity(intent);
 			}
 		};
-		Button searchButton = (Button)findViewById(R.id.price_button_start);
+		Button searchButton = (Button)findViewById(R.id.price_search_button_start);
 		searchButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -437,7 +435,7 @@ public class PriceActivity extends Activity{
 				switch (msg.what) {
 				case DATA_SUCCESS:
 
-					listViewAdapter = new PriceAdapter(PriceActivity.this,R.layout.item_price); //创建适配器   
+					listViewAdapter = new PriceAdapter(PriceSearchResultActivity.this,R.layout.item_price); //创建适配器   
 					listView.setAdapter(listViewAdapter);
 					listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -496,12 +494,10 @@ public class PriceActivity extends Activity{
 				parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
 				.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
 				.append("cityId=").append(getCityID()).append("&")
-				.append("date=").append(getTimestamp()).append("&")
 				.append("productCategoryid=").append(getTyepID()).append("&")
-				.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid))).append("&")
-				.append("price_index=").append("1").append("&")
-				.append("page=").append("1");
-				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PRICEINFO)+"?"+parBuffer.toString());
+				.append("productname=").append(editText.getText().toString()).append("&")
+				.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid)));
+				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_FINDPRICE)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
 					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
@@ -625,7 +621,7 @@ public class PriceActivity extends Activity{
 			ViewHolder holder = null;
 			final int index =position;
 			if (convertView == null) {
-				synchronized (PriceActivity.this) {
+				synchronized (PriceSearchResultActivity.this) {
 					convertView = mInflater.inflate(id_row_layout, null);
 					holder = new ViewHolder();
 

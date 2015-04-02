@@ -43,6 +43,7 @@ public class LHScrollView extends HorizontalScrollView {
 		/*
 		 * 当滚动条移动后，引发 滚动事件。通知给观察者，观察者会传达给其他的。
 		 */
+		Log.i("pdwy","LHScrollView onScrollChanged");
 		if (mScrollViewObserver != null /*&& (l != oldl || t != oldt)*/) {
 			mScrollViewObserver.NotifyOnScrollChanged(l, t, oldl, oldt);
 		}

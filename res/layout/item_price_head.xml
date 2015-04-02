@@ -2,22 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:background="@drawable/color_grayback"
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
-    android:padding="5dp" 
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp">
+    android:padding="5dp" >
 
     <TextView
         android:id="@+id/item_price_head_name"
-        android:layout_width="80dp"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="@string/price_name"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textColor="@drawable/color_text"
+        android:textSize="14sp" />
 
     <com.example.wegame.InterceptScrollContainer
         android:id="@+id/scroollContainter"
@@ -46,8 +47,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:gravity="center"
                     android:text="@string/price_spec"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/item_price_head_rprice"
@@ -56,7 +59,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:text="@string/price_rprice"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/item_price_head_unit"
@@ -64,8 +68,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:gravity="center"
                     android:text="@string/price_unit"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/item_price_head_priceIndex"
@@ -73,8 +79,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:gravity="center"
                     android:text="@string/price_priceIndex"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/item_price_marketShort"
@@ -82,8 +90,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:gravity="center"
                     android:text="@string/price_marketShort"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/item_price_head_releaseDate"
@@ -91,16 +101,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:gravity="center"
                     android:text="@string/price_releaseDate"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
+
                 <TextView
                     android:id="@+id/item_price_head_list"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:gravity="center"
                     android:text="@string/price_list"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
             </LinearLayout>
         </com.example.wegame.LHScrollView>
     </com.example.wegame.InterceptScrollContainer>

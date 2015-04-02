@@ -2,7 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/color_white"
     android:orientation="vertical" >
+
+    <!-- 查价格主页 -->
+    <!-- 头部导航栏 -->
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -10,10 +14,12 @@
         android:background="@drawable/color_topback" >
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="fill_parent"
+            android:id="@+id/price_search_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:contentDescription="@string/pic_placehold"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
@@ -21,25 +27,13 @@
             android:src="@drawable/bank_home_ico" />
 
         <TextView
-            android:id="@+id/main_city"
-            android:layout_width="60dp"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/main_price"
             android:textColor="@drawable/color_white"
             android:textSize="18sp" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:contentDescription="@string/pic_placehold"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/head_search_ico" />
     </RelativeLayout>
     <!-- 搜索框 -->
 
@@ -47,26 +41,101 @@
         android:layout_width="fill_parent"
         android:layout_height="44dp"
         android:background="@drawable/color_white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:paddingBottom="2dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="2dp" >
 
         <EditText
-            android:id="@+id/main_search"
+            android:id="@+id/price_search_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/main_search_bg"
             android:hint="@string/main_search_hint"
-            android:paddingLeft="5dp" />
+            android:paddingLeft="10dp"
+            android:singleLine="true" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="37dp"
+            android:id="@+id/price_search_btn"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:src="@drawable/search_nav_ico" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/color_white"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp" >
+
+        <Spinner
+            android:id="@+id/price_search_spinner_city"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/price_spinner_bg" />
+
+        <Spinner
+            android:id="@+id/price_search_spinner_category"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/price_spinner_bg" />
+
+        <TextView
+            android:id="@+id/price_search_btn_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/price_spinner_bg"
+            android:gravity="center"
+            android:textColor="@drawable/color_black" />
+
+        <Button
+            android:id="@+id/price_search_button_start"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/main_price_start_bg"
+            android:gravity="center"
+            android:text="@string/provider_search"
+            android:textColor="@drawable/color_white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/price_search_head"
+        android:layout_marginTop="5dp"
+        layout="@layout/item_price_head" />
+
+    <ListView
+        android:id="@+id/price_search_content_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null" >
+    </ListView>
 
 </LinearLayout>
