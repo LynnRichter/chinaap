@@ -44,7 +44,7 @@ public class JSONHelpler {
 				byte[] data = new byte[1024*100];
 				IOUtils.read(instream, data);
 				String jsonStr = new String(data); 
-//				Log.d("","获取到的json字符串："+jsonStr);
+//				Log.d("lynntag","获取到的json字符串："+jsonStr);
 
 				jsonData = new JSONObject(jsonStr);
 			}
@@ -79,7 +79,7 @@ public class JSONHelpler {
 				byte[] data = new byte[1024*100];
 				IOUtils.read(instream, data);
 				String jsonStr = new String(data); 
-				Log.d("","获取到的json字符串："+jsonStr);
+//				Log.d("","获取到的json字符串："+jsonStr);
 				jsonData = new JSONObject(jsonStr);
 			}
 

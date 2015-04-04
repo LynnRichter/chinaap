@@ -15,7 +15,6 @@ import org.json.JSONObject;
 
 import com.example.wegame.LHScrollView.OnScrollChangedListener;
 
-import android.R.integer;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -32,14 +31,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -47,18 +44,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class PriceActivity extends Activity{
+public class ListActivity extends Activity{
+	
 	private Spinner citySpinner;
 	private List<String> citylist = new ArrayList<String>(); 
 	private List<String> cityidlist = new ArrayList<String>();
 	private ArrayAdapter<String> cityAdapter;   
 	private Runnable cityRunnable = null;
 
-	private Spinner typeSpinner;
-	private List<String> typelist = new ArrayList<String>(); 
-	private List<String> typeidlist = new ArrayList<String>();
-	private ArrayAdapter<String> typeAdapter;   
-	private Runnable typeRunnable = null;
+
 
 	private static final int CITY_SUCCESS =0;
 	private static final int CITY_ERROR = 1;
@@ -69,7 +63,6 @@ public class PriceActivity extends Activity{
 	private static final int EXCEPTION	= 6;
 
 	private Handler dataHandler = null;
-	private Handler listHandler = null;
 	private String tyepID,cityID,typeName,cityName,dateString,timestamp,sortIndex;
 	private PriceAdapter listViewAdapter; 
 	private ListView listView;
@@ -80,7 +73,7 @@ public class PriceActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceStateBundle) {
 		super.onCreate(savedInstanceStateBundle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(getLayoutInflater().inflate(R.layout.activity_price, null));
+		setContentView(getLayoutInflater().inflate(R.layout.activity_list, null));
 		UIFactory();
 	}
 	class ListViewAndHeadViewTouchLinstener implements View.OnTouchListener {
@@ -98,15 +91,14 @@ public class PriceActivity extends Activity{
 	{
 
 		citySpinner = (Spinner)findViewById(R.id.price_spinner_city);
-		typeSpinner = (Spinner)findViewById(R.id.price_spinner_category);
 		headView =(RelativeLayout)findViewById(R.id.price_head);
 		headView.setFocusable(true);
 		headView.setClickable(true);
 		headView.setOnTouchListener(new ListViewAndHeadViewTouchLinstener());
 		listView =(ListView)findViewById(R.id.price_content_list);
 		listView.setOnTouchListener(new ListViewAndHeadViewTouchLinstener());
-
-
+		setTyepID("-200");
+		
 
 
 		final TextView dateView =(TextView)findViewById(R.id.price_btn_date);
@@ -122,7 +114,7 @@ public class PriceActivity extends Activity{
 			public void onClick(View arg0) {
 				Calendar calendar = Calendar.getInstance();
 				// TODO Auto-generated method stub
-				DatePickerDialog dialog = new DatePickerDialog(PriceActivity.this, new DatePickerDialog.OnDateSetListener() {
+				DatePickerDialog dialog = new DatePickerDialog(ListActivity.this, new DatePickerDialog.OnDateSetListener() {
 
 					@Override
 					public void onDateSet(DatePicker arg0, int year, int month, int day) {
@@ -155,17 +147,7 @@ public class PriceActivity extends Activity{
 				finish();				
 			}
 		});
-		ImageView searchView =(ImageView)findViewById(R.id.price_search);
-		searchView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent();
-				intent.putExtra("InputKey", "");
-				intent.setClass(PriceActivity.this, PriceSearchResultActivity.class);
-				startActivity(intent);
-			}
-		});
+		
 
 
 
@@ -179,7 +161,7 @@ public class PriceActivity extends Activity{
 				Toast toast = null;
 				switch (msg.what) {
 				case CITY_SUCCESS:
-					cityAdapter = new ArrayAdapter<String>(PriceActivity.this, android.R.layout.simple_spinner_item, citylist);
+					cityAdapter = new ArrayAdapter<String>(ListActivity.this, android.R.layout.simple_spinner_item, citylist);
 					cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);    
 					//第四步：将适配器添加到下拉列表上    
 					citySpinner.setAdapter(cityAdapter);
@@ -194,16 +176,16 @@ public class PriceActivity extends Activity{
 							//							toast.setGravity(Gravity.CENTER, 0, 0);
 							//							toast.show();
 							arg0.setVisibility(View.VISIBLE);   
-							typelist.clear();
-							typeidlist.clear();
-							new Thread(typeRunnable).start();
+							
 
 						}    
 						public void onNothingSelected(AdapterView<?> arg0) {    
 							arg0.setVisibility(View.VISIBLE);    
 						}
 
-					});   
+					});  
+					setCityID("1");
+					startLoad();
 
 					break;
 				case CITY_ERROR:
@@ -270,100 +252,7 @@ public class PriceActivity extends Activity{
 		new Thread(cityRunnable).start();
 
 
-		final Handler typeHandler = new Handler()
-		{
-			@Override
-			public void handleMessage(Message msg)
-			{
-				Toast toast = null;
-				switch (msg.what) {
-				case TYPE_SUCCESS:
-					typeAdapter = new ArrayAdapter<String>(PriceActivity.this, android.R.layout.simple_spinner_item, typelist);
-					typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);    
-					//第四步：将适配器添加到下拉列表上    
-					typeSpinner.setAdapter(typeAdapter);
-					typeSpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener()
-					{    
-						public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {    
-
-							setTyepID(typeidlist.get(arg2)); 
-							setTypeName(typeAdapter.getItem(arg2));
-							//							Toast toast = Toast.makeText(getApplicationContext(),
-							//									"您选择的类别是："+ typeAdapter.getItem(arg2)+"& ID= "+typeidlist.get(arg2), Toast.LENGTH_LONG);
-							//							toast.setGravity(Gravity.CENTER, 0, 0);
-							//							toast.show();
-							arg0.setVisibility(View.VISIBLE); 
-
-						}    
-						public void onNothingSelected(AdapterView<?> arg0) {    
-							arg0.setVisibility(View.VISIBLE);    
-						}
-
-					});   
-					setTyepID("1");
-					startLoad();					
-					break;
-				case TYPE_ERROR:
-					toast = Toast.makeText(getApplicationContext(),
-							(String)msg.obj, Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
-					break;
-				case EXCEPTION:
-					toast = Toast.makeText(getApplicationContext(),
-							getString(R.string.error_msg), Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
-					break;
-
-				default:
-					toast = Toast.makeText(getApplicationContext(),
-							getString(R.string.error_msg), Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
-					break;
-				}
-			}
-		};
-		typeRunnable = new Runnable() {
-			@Override
-			public void run() {
-				Message msg = new Message();
-				StringBuffer parBuffer  = new StringBuffer();
-				parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
-				.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
-				.append("cityid=").append(getCityID());
-				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_TYPEINFO)+"?"+parBuffer.toString());
-				try {
-					String datasString = retJsonObject.getString("data");
-					//					Log.d(getString(R.string.log_tag), "typeData："+datasString);
-					if (datasString.length() == 0) {
-						msg.what = TYPE_ERROR;
-						msg.obj = retJsonObject.getString("info");
-					}else {
-
-						JSONArray jsonArray = retJsonObject.getJSONArray("data");
-						for (int i=0;i<jsonArray.length();i++) {
-							JSONObject item = jsonArray.getJSONObject(i);
-							typelist.add(item.getString("name"));
-							typeidlist.add(item.getString("id"));
-						}
-						msg.what = TYPE_SUCCESS;
-
-					}
-
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					msg.what = EXCEPTION;
-
-				}
-
-
-				typeHandler.sendMessage(msg);
-
-			}
-		};
+		
 		final Handler handler = new Handler()
 		{
 			@Override
@@ -371,7 +260,7 @@ public class PriceActivity extends Activity{
 			{
 
 				Intent intent  = new Intent();
-				intent.setClass(PriceActivity.this, LoginActivity.class);
+				intent.setClass(ListActivity.this, LoginActivity.class);
 				startActivity(intent);
 			}
 		};
@@ -381,75 +270,42 @@ public class PriceActivity extends Activity{
 			@Override
 			public void onClick(View arg0) {
 
-				try {
-					Date curDate = new Date(System.currentTimeMillis());//获取当前时间  
-					Date toData = new SimpleDateFormat("yyyy-MM-dd").parse(dateView.getText().toString());
-					Log.d(getString(R.string.log_tag), "相隔天数："+ JSONHelpler.getGapCount(curDate,toData));
+				if ( !JSONHelpler.getLogin(getApplicationContext())) {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							getString(R.string.list_tips), Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+					Runnable waitRunnable  =new Runnable() {
 
-					if (JSONHelpler.getGapCount(curDate,toData) >= -90 && !JSONHelpler.getLogin(getApplicationContext())) {
-						Toast toast = Toast.makeText(getApplicationContext(),
-								getString(R.string.price_search_tips), Toast.LENGTH_LONG);
-						toast.setGravity(Gravity.CENTER, 0, 0);
-						toast.show();
-						Runnable waitRunnable  =new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								Message msg = new Message();
-								try {
-									Thread.sleep(4000);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								msg.what = 0;
-								handler.sendMessage(msg);
-
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							Message msg = new Message();
+							try {
+								Thread.sleep(4000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
-						};
-						new Thread(waitRunnable).start();
-						//						Thread.sleep(3000);
-						//						Intent intent = new Intent();
-						//						intent.setClass(PriceActivity.this, LoginActivity.class);
-						//						startActivity(intent);
+							msg.what = 0;
+							handler.sendMessage(msg);
 
-					}
-					else{
-						startLoad();
-					}
-				} 
-				catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-				//				catch (InterruptedException e) {
-				//					// TODO Auto-generated catch block
-				//					e.printStackTrace();
-				//				}
+						}
+					};
+					new Thread(waitRunnable).start();
+					//						Thread.sleep(3000);
+					//						Intent intent = new Intent();
+					//						intent.setClass(ListActivity.this, LoginActivity.class);
+					//						startActivity(intent);
+
+				}
+				else{
+					startLoad();
+				}
 
 
 			}
 		});
-
-		listHandler = new Handler(){
-			@Override
-			public void handleMessage(Message msg)
-			{
-				Toast toast = Toast.makeText(getApplicationContext(),
-						(String)msg.obj, Toast.LENGTH_SHORT);
-				toast.setGravity(Gravity.CENTER, 0, 0);
-				toast.show();
-//				PriceAdapter tempAdapter = new PriceAdapter(PriceActivity.this,R.layout.item_price);
-//				listView.setAdapter(tempAdapter);
-//				tempAdapter.notifyDataSetChanged();
-				 
-			}
-		};
-
-
-
-
 
 		dataHandler = new Handler()
 		{
@@ -460,131 +316,24 @@ public class PriceActivity extends Activity{
 				switch (msg.what) {
 				case DATA_SUCCESS:
 
-					listViewAdapter = new PriceAdapter(PriceActivity.this,R.layout.item_price); //创建适配器   
+					listViewAdapter = new PriceAdapter(ListActivity.this,R.layout.item_price); //创建适配器   
 					listView.setAdapter(listViewAdapter);
 					listView.setOnItemClickListener(new OnItemClickListener() {
 
 						@Override
 						public void onItemClick(AdapterView<?> arg0, View arg1,
 								int arg2, long arg3) {
-							Log.d(getString(R.string.log_tag), "你单击了第："+arg2+"行");
-							Toast toast = Toast.makeText(getApplicationContext(),
-									"单击选中行跳转页面，功能暂未开发完成", Toast.LENGTH_SHORT);
-							toast.setGravity(Gravity.CENTER, 0, 0);
-							toast.show();
-
-
-						}
-					});
-					listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-						@Override
-						public boolean onItemLongClick(AdapterView<?> arg0,
-								View arg1, int arg2, long arg3) {
 							// TODO Auto-generated method stub
-							final int index = arg2;
-							//							Log.d(getString(R.string.log_tag), "你长按了第："+arg2+"行");
-							Log.d(getString(R.string.log_tag), "你长按了第："+getListItems().get(arg2).get("isInUserPurchaseList")+"行");
-
-							if (!JSONHelpler.getLogin(getApplicationContext())) {
-								Toast toast = Toast.makeText(getApplicationContext(),
-										getString(R.string.list_tips), Toast.LENGTH_LONG);
-								toast.setGravity(Gravity.CENTER, 0, 0);
-								toast.show();
-								Runnable waitRunnable  =new Runnable() {
-
-									@Override
-									public void run() {
-										// TODO Auto-generated method stub
-										Message msg = new Message();
-										try {
-											Thread.sleep(4000);
-										} catch (InterruptedException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-										msg.what = 0;
-										handler.sendMessage(msg);
-
-									}
-								};
-								new Thread(waitRunnable).start();
-							}else {
-								Runnable addList = new Runnable() {
-									@Override
-									public void run() {
-										Message msg = new Message();
-										StringBuffer parBuffer  = new StringBuffer();
-										if (getListItems().get(index).get("isInUserPurchaseList").equals("false")) {
-											//添加到采购清单
-
-											parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
-											.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
-											.append("productid=").append(getListItems().get(index).get("productId")).append("&")
-											.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid))).append("&")
-											.append("marketoid=").append(getListItems().get(index).get("marketoid"));
-											JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_ADDLIST)+"?"+parBuffer.toString());
-											try {
-												String datasString = retJsonObject.getString("data");
-												if (datasString.length() == 0) {
-													msg.obj=retJsonObject.getString("info");
-												}else{
-													msg.obj = datasString;
-													getListItems().get(index).remove("isInUserPurchaseList"); 
-													getListItems().get(index).put("isInUserPurchaseList","true");
-												}
-
-												//												Log.d(getString(R.string.log_tag), "RequestData："+parBuffer.toString());
-												//												Log.d(getString(R.string.log_tag), "addListData："+datasString);
+							//							HashMap<String,String> map=(HashMap<String,String>)getListItems().get(arg2);   
+							//							Intent intent = new Intent();
+							//							intent.setClass(ListActivity.this, ProviderDetailActivity.class);
+							//							intent.putExtra("Item", map);
+							//							startActivity(intent);
+							Log.d(getString(R.string.log_tag), "你选择了第："+arg2+"行");
 
 
 
 
-
-											} catch (JSONException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-
-											}
-											listHandler.sendMessage(msg);
-
-
-										}else
-										{
-											//从采购清单删除
-											parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
-											.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
-											.append("productid=").append(getListItems().get(index).get("productId")).append("&")
-											.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid))).append("&")
-											.append("marketoid=").append(getListItems().get(index).get("marketoid"));
-											JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_DELLIST)+"?"+parBuffer.toString());
-											try {
-												String datasString = retJsonObject.getString("data");
-												if (datasString.length() == 0) {
-													msg.obj=retJsonObject.getString("info");
-												}else{
-													msg.obj = datasString;
-													getListItems().get(index).remove("isInUserPurchaseList"); 
-													getListItems().get(index).put("isInUserPurchaseList","true");												}
-
-											} catch (JSONException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-
-											}
-											listHandler.sendMessage(msg);
-
-
-										}
-
-									}
-								};
-								new Thread(addList).start();
-							}
-
-
-
-							return true;
 						}
 					});
 					break;
@@ -612,12 +361,11 @@ public class PriceActivity extends Activity{
 		};
 
 
-
-
 	}
 	private void startLoad()
 	{
 		Runnable dataRunnable = new Runnable() {
+
 			@Override
 			public void run() {
 				List<Map<String, String>> listitems = new ArrayList<Map<String, String>>();  
@@ -635,8 +383,8 @@ public class PriceActivity extends Activity{
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PRICEINFO)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
-					//					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
-					//					Log.d(getString(R.string.log_tag), "PriceData："+datasString);
+					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
+					Log.d(getString(R.string.log_tag), "PriceData："+datasString);
 
 					if (datasString.length() == 0) {
 						msg.what = DATA_ERROR;
@@ -654,11 +402,6 @@ public class PriceActivity extends Activity{
 							map.put("priceIndex", item.getString("priceIndex"));
 							map.put("marketShort", item.getString("marketShort"));
 							map.put("releaseDate", item.getString("releaseDate"));
-							map.put("marketoid", item.getString("marketoid"));
-							map.put("productId", item.getString("productId"));
-							//							Log.d(getString(R.string.log_tag), "isInUserPurchaseList ："+item.getString("isInUserPurchaseList"));
-
-							map.put("isInUserPurchaseList", item.getString("isInUserPurchaseList"));
 							getListItems().add(map);
 						}
 
@@ -761,7 +504,7 @@ public class PriceActivity extends Activity{
 			ViewHolder holder = null;
 			final int index =position;
 			if (convertView == null) {
-				synchronized (PriceActivity.this) {
+				synchronized (ListActivity.this) {
 					convertView = mInflater.inflate(id_row_layout, null);
 					holder = new ViewHolder();
 
@@ -784,13 +527,16 @@ public class PriceActivity extends Activity{
 					holder.marketShort_text =(TextView) convertView.findViewById(R.id.item_price_marketShort);
 					holder.releaseDate_text =(TextView) convertView.findViewById(R.id.item_price_releaseDate);
 					holder.list_text =(TextView) convertView.findViewById(R.id.item_price_list);
-					Log.d(getString(R.string.log_tag), "isInUserPurchaseList ："+getListItems().get(position).get("isInUserPurchaseList").toString());
 
-					if (getListItems().get(position).get("isInUserPurchaseList").toString().equals("true")) {
-						holder.list_text.setBackgroundResource(R.drawable.color_grayback);
-						holder.list_text.setTextColor(R.drawable.color_white);
-						holder.list_text.setText("移除清单");
-					}
+					holder.list_text.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View arg0) {
+
+							Log.d(getString(R.string.log_tag), "你点击了第："+index+"行的按钮");
+
+						}
+					});
 					convertView.setTag(holder);
 					mHolderList.add(holder);
 					if (position%2 != 0) {

@@ -22,7 +22,9 @@
         </activity>
         <activity android:name="com.example.wegame.PriceActivity" >
         </activity>
-        <activity android:name="com.example.wegame.PriceSearchResultActivity"></activity>
+        <activity android:name="com.example.wegame.PriceSearchResultActivity" >
+        </activity>
+        <activity android:name="com.example.wegame.ProductDetail"></activity>
         <activity android:name="com.example.wegame.InfoActivity" >
         </activity>
         <activity android:name="com.example.wegame.ServiceActivity" >
@@ -40,6 +42,8 @@
         <activity android:name="com.example.wegame.ProviderDetailActivity" >
         </activity>
         <activity android:name="com.example.wegame.ProviderSearchActivity" >
+        </activity>
+        <activity android:name="com.example.wegame.ListActivity" >
         </activity>
         <activity android:name="com.example.wegame.DefaultActivity" >
             <intent-filter>

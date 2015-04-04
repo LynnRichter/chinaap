@@ -164,6 +164,16 @@ public class MainActivity extends Activity {
 				startActivity(intent);				
 			}
 		});
-		
+		RelativeLayout listLayout =(RelativeLayout)this.findViewById(R.id.main_list);
+		listLayout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, ListActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 }
