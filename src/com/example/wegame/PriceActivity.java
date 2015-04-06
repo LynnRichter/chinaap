@@ -417,10 +417,7 @@ public class PriceActivity extends Activity{
 							}
 						};
 						new Thread(waitRunnable).start();
-						//						Thread.sleep(3000);
-						//						Intent intent = new Intent();
-						//						intent.setClass(PriceActivity.this, LoginActivity.class);
-						//						startActivity(intent);
+					
 
 					}
 					else{
@@ -435,10 +432,7 @@ public class PriceActivity extends Activity{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
-				//				catch (InterruptedException e) {
-				//					// TODO Auto-generated catch block
-				//					e.printStackTrace();
-				//				}
+				
 
 
 			}
@@ -469,7 +463,6 @@ public class PriceActivity extends Activity{
 							lisTextView.setTextColor(R.drawable.color_white);
 							lisTextView.setText("长按移除清单");
 							break;
-
 						default:
 							break;
 						}
@@ -496,11 +489,13 @@ public class PriceActivity extends Activity{
 						@Override
 						public void onItemClick(AdapterView<?> arg0, View arg1,
 								int arg2, long arg3) {
-							Log.d(getString(R.string.log_tag), "你单击了第："+arg2+"行");
-							//							toast = Toast.makeText(getApplicationContext(),
-							//									"单击选中行跳转页面，功能暂未开发完成", Toast.LENGTH_SHORT);
-							//							toast.setGravity(Gravity.CENTER, 0, 0);
-							//							toast.show();
+//							Log.d(getString(R.string.log_tag), "你单击了第："+arg2+"行");
+							HashMap<String,String> map=(HashMap<String,String>)getListItems().get(arg2);   
+							Intent intent = new Intent();
+							intent.setClass(PriceActivity.this, ProductDetail.class);
+							intent.putExtra("Item", map);
+							intent.putExtra("CityName", getCityName());
+							startActivity(intent);
 
 
 						}
@@ -892,7 +887,7 @@ public class PriceActivity extends Activity{
 			holder.spec_text.setText(getListItems().get(position).get("spec"));
 			holder.rprice_text.setText(" ￥"+getListItems().get(position).get("rprice"));
 			holder.unit_text.setText(getListItems().get(position).get("unit"));
-			holder.priceIndex_text.setText(getListItems().get(position).get("priceIndex").endsWith("null") ? "0" :getListItems().get(position).get("priceIndex"));
+			holder.priceIndex_text.setText(getListItems().get(position).get("priceIndex").equals("null") ? "0" :getListItems().get(position).get("priceIndex"));
 			holder.marketShort_text.setText(getListItems().get(position).get("marketShort"));
 			holder.releaseDate_text.setText(getListItems().get(position).get("releaseDate"));
 

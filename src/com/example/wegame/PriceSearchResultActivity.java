@@ -66,6 +66,7 @@ public class PriceSearchResultActivity extends Activity{
 	private static final int TYPE_ERROR = 3;
 	private static final int DATA_SUCCESS = 4;
 	private static final int DATA_ERROR = 5;
+	private static final int DATA_EMPTY = 7;
 	private static final int EXCEPTION	= 6;
 
 	private Handler dataHandler = null;

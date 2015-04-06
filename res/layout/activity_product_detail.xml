@@ -44,7 +44,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-			<!--品名  -->
+
+            <!-- 品名 -->
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp" >
@@ -53,9 +55,9 @@
                     android:id="@+id/detail_z1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/detail_name"
-                    android:layout_marginLeft="5dp"
                     android:textColor="@drawable/color_text"
                     android:textSize="14sp" />
 
@@ -63,27 +65,31 @@
                     android:id="@+id/detail_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="8dp"
                     android:layout_toRightOf="@id/detail_z1"
                     android:textColor="@drawable/color_text"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/price_button_start"
+                    android:id="@+id/detail_opList"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:layout_margin="3dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/main_price_start_bg"
                     android:gravity="center"
-                    android:text="@string/price_addlist"
+                    android:text="@string/price_detail_addlist"
                     android:textColor="@drawable/color_white"
                     android:textSize="14sp" />
             </RelativeLayout>
-            <!--别名  -->
+            <!-- 别名 -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
+                android:background="@drawable/color_grayback"
                 android:orientation="horizontal"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp" >
@@ -98,13 +104,15 @@
 
                 <TextView
                     android:id="@+id/detail_aliasname"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="8dp"
                     android:textColor="@drawable/color_text"
                     android:textSize="14sp" />
             </LinearLayout>
-            <!--规格  -->
+            <!-- 规格 -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
@@ -121,17 +129,20 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/provider_detail_mainp"
+                    android:id="@+id/detail_spec"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="8dp"
                     android:textColor="@drawable/color_text"
                     android:textSize="14sp" />
             </LinearLayout>
-            <!--批发价-->
+            <!-- 批发价 -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
+                android:background="@drawable/color_grayback"
                 android:orientation="horizontal"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp" >
@@ -148,11 +159,13 @@
                     android:id="@+id/detail_rprice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="8dp"
-                    android:textColor="@drawable/color_text"
+                    android:textColor="@drawable/color_textRed"
                     android:textSize="14sp" />
             </LinearLayout>
-            <!--价格指数  -->
+            <!-- 价格指数 -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
@@ -172,14 +185,17 @@
                     android:id="@+id/detail_priceIndex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="8dp"
-                    android:textColor="@drawable/color_text"
+                    android:textColor="@drawable/color_textRed"
                     android:textSize="14sp" />
             </LinearLayout>
-            <!-- 价格来源-->
+            <!-- 价格来源 -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
+                android:background="@drawable/color_grayback"
                 android:orientation="horizontal"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp" >
@@ -196,11 +212,13 @@
                     android:id="@+id/detail_marketShort"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="8dp"
                     android:textColor="@drawable/color_text"
                     android:textSize="14sp" />
             </LinearLayout>
-            <!--  报价日期-->
+            <!-- 报价日期 -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
@@ -224,6 +242,163 @@
                     android:textColor="@drawable/color_text"
                     android:textSize="14sp" />
             </LinearLayout>
+
+            <!-- 各地批发价格 -->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/color_grayback" >
+
+                <TextView
+                    android:id="@+id/detail_market_prices_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@drawable/color_black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/color_topback" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/color_grayback"
+                android:focusable="false"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/detail_prices_city"
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/price_rprice"
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/detail_marketShort"
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/detail_releaseDate"
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <com.example.wegame.NoScrollListView
+                android:id="@+id/detail_prices_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/color_white"
+                android:divider="@drawable/color_stroke"
+                android:dividerHeight="1dp" >
+            </com.example.wegame.NoScrollListView>
+            <!-- 价格走势曲线 -->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/color_grayback" >
+
+                <TextView
+                    android:id="@+id/detail_line_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@drawable/color_black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/color_topback" />
+            </RelativeLayout>
+            <!-- 历年价格 -->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/color_grayback" >
+
+                <TextView
+                    android:id="@+id/detail_price_history_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@drawable/color_black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/color_topback" />
+            </RelativeLayout>
+            <!-- 供应商推荐 -->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/color_grayback" >
+
+                <TextView
+                    android:id="@+id/detail_provider_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@drawable/color_black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/color_topback" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
