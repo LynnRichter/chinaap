@@ -20,11 +20,14 @@
             android:name="com.example.wegame.MainActivity"
             android:launchMode="singleTask" >
         </activity>
+        <activity android:name="com.example.wegame.TabMainActivity" >
+        </activity>
         <activity android:name="com.example.wegame.PriceActivity" >
         </activity>
         <activity android:name="com.example.wegame.PriceSearchResultActivity" >
         </activity>
-        <activity android:name="com.example.wegame.ProductDetail"></activity>
+        <activity android:name="com.example.wegame.ProductDetail" >
+        </activity>
         <activity android:name="com.example.wegame.InfoActivity" >
         </activity>
         <activity android:name="com.example.wegame.ServiceActivity" >

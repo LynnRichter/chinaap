@@ -125,7 +125,7 @@ public class ProviderSearchActivity extends Activity {
 						StringBuffer parBuffer  = new StringBuffer();
 						parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
 						.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
-						.append("productname=").append(searchText.getText().toString());
+						.append("providerName=").append(searchText.getText().toString());
 						JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PROVIDERSEARCH)+"?"+parBuffer.toString());
 						try {
 							String datasString = retJsonObject.getString("data");

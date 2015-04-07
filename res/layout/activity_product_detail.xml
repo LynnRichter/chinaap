@@ -248,7 +248,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/color_grayback" >
 
                 <TextView
@@ -271,6 +271,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/color_grayback"
                 android:focusable="false"
                 android:orientation="horizontal" >
@@ -281,7 +284,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left|center_vertical"
                     android:text="@string/detail_prices_city"
                     android:textColor="@drawable/color_text"
                     android:textSize="14sp" />
@@ -303,7 +306,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/detail_marketShort"
+                    android:text="@string/price_marketShort"
                     android:textColor="@drawable/color_text"
                     android:textSize="14sp" />
 
@@ -314,7 +317,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/detail_releaseDate"
+                    android:text="@string/price_releaseDate"
                     android:textColor="@drawable/color_text"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -323,9 +326,10 @@
                 android:id="@+id/detail_prices_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:background="@drawable/color_white"
-                android:divider="@drawable/color_stroke"
-                android:dividerHeight="1dp" >
+                android:divider="@drawable/color_stroke" >
             </com.example.wegame.NoScrollListView>
             <!-- 价格走势曲线 -->
 
@@ -375,6 +379,59 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/color_topback" />
             </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/color_grayback"
+                android:focusable="false"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/price_releaseDate"
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/price_rprice"
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/price_marketShort"
+                    android:textColor="@drawable/color_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <com.example.wegame.NoScrollListView
+                android:id="@+id/detail_price_history_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/color_white"
+                android:divider="@drawable/color_stroke" >
+            </com.example.wegame.NoScrollListView>
             <!-- 供应商推荐 -->
 
             <RelativeLayout
@@ -399,6 +456,16 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/color_topback" />
             </RelativeLayout>
+            <com.example.wegame.NoScrollListView
+                android:id="@+id/detail_price_provider_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/color_white"
+                android:divider="@drawable/color_stroke" 
+                android:dividerHeight="1px">
+            </com.example.wegame.NoScrollListView>
         </LinearLayout>
     </ScrollView>
 

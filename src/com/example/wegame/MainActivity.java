@@ -109,7 +109,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Intent intent =new Intent();
-				intent.setClass(MainActivity.this, PriceActivity.class);
+				intent.setClass(MainActivity.this, TabMainActivity.class);
+				intent.putExtra("id", "0");
 				startActivity(intent);
 			}
 		});
@@ -120,7 +121,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Intent intent =new Intent();
-				intent.setClass(MainActivity.this, ProviderActivity.class);
+				intent.setClass(MainActivity.this, TabMainActivity.class);
+				intent.putExtra("id", "1");
 				startActivity(intent);
 			}
 		});
@@ -154,14 +156,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent();
-//				ÅÐ¶ÏÊÇ·ñµÇÂ¼¹ýÕÊºÅ
-				if (JSONHelpler.getLogin(getApplicationContext())) {
-					intent.setClass(MainActivity.this, VIPActivity.class);
-				}
-				else {
-					intent.setClass(MainActivity.this, LoginActivity.class);
-				}
-				startActivity(intent);				
+				intent.setClass(MainActivity.this, TabMainActivity.class);
+				intent.putExtra("id", "3");
+				startActivity(intent);			
 			}
 		});
 		RelativeLayout listLayout =(RelativeLayout)this.findViewById(R.id.main_list);
@@ -170,8 +167,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.setClass(MainActivity.this, ListActivity.class);
+				Intent intent =new Intent();
+				intent.setClass(MainActivity.this, TabMainActivity.class);
+				intent.putExtra("id", "2");
 				startActivity(intent);
 			}
 		});

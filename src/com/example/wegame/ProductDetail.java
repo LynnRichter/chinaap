@@ -32,6 +32,11 @@ public class ProductDetail extends Activity {
 	private static final int ERROR = 1;
 	private List<Map<String,String>> priceDataList;
 	private PricesAdapter pricesAdapter;
+	private  List<Map<String,String>> priceHistoryList;
+	private PricesHistoryAdapter priceHistoryAdapter;
+	private List<Map<String,String>> providerDataList;
+	private ProviderAdapter providerAdapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceStateBundle) {
 		super.onCreate(savedInstanceStateBundle);
@@ -50,8 +55,12 @@ public class ProductDetail extends Activity {
 				finish();				
 			}
 		});
-		List<Map<String, String>> listitems = new ArrayList<Map<String, String>>();  
+		List<Map<String, String>> listitems = new ArrayList<Map<String, String>>(); 
+		List<Map<String, String>> historyitems = new ArrayList<Map<String, String>>(); 
+		List<Map<String, String>> provideritems = new ArrayList<Map<String, String>>(); 
 		setPriceDataList(listitems);
+		setPriceHistoryList(historyitems);
+		setProviderDataList(provideritems);
 		final HashMap<String,String> map=(HashMap<String,String>)getIntent().getSerializableExtra("Item");
 
 		opView =(TextView)findViewById(R.id.detail_opList);
@@ -94,10 +103,10 @@ public class ProductDetail extends Activity {
 
 		TextView providerHead =(TextView)findViewById(R.id.detail_provider_head);
 		providerHead.setText(getIntent().getSerializableExtra("CityName")+map.get("productName")+"供应商推荐");
-		
-		 final NoScrollListView pricesListView =(NoScrollListView)findViewById(R.id.detail_prices_list);
-		
 
+		final NoScrollListView pricesListView =(NoScrollListView)findViewById(R.id.detail_prices_list);
+		final NoScrollListView priceHistoryView =(NoScrollListView)findViewById(R.id.detail_price_history_list);
+		final NoScrollListView providerView =(NoScrollListView)findViewById(R.id.detail_price_provider_list);
 		final Handler handler = new Handler()
 		{
 			@Override
@@ -133,6 +142,7 @@ public class ProductDetail extends Activity {
 
 			}
 		};
+
 
 		opView.setOnClickListener(new OnClickListener() {
 
@@ -246,7 +256,7 @@ public class ProductDetail extends Activity {
 				case SUCCESS:
 					pricesAdapter = new PricesAdapter(ProductDetail.this, getPriceDataList()); //创建适配器  
 					pricesListView.setAdapter(pricesAdapter);
-					
+
 					break;
 				case ERROR:
 
@@ -257,6 +267,7 @@ public class ProductDetail extends Activity {
 				}
 			}
 		};
+
 
 		Runnable pricesRunnable = new Runnable() {
 
@@ -273,7 +284,6 @@ public class ProductDetail extends Activity {
 
 				try {
 					String datasString = retJsonObject.getString("data");
-					Log.d(getString(R.string.log_tag), "cityData："+datasString);
 					if (datasString.length() == 0) {
 						msg.what = ERROR;
 						msg.obj = retJsonObject.getString("info");
@@ -306,6 +316,149 @@ public class ProductDetail extends Activity {
 		};
 		new Thread(pricesRunnable).start();
 
+		final Handler historyHandler = new Handler(){
+			@Override
+			public void handleMessage(Message msg)
+			{
+				switch (msg.arg1) {
+				case SUCCESS:
+					priceHistoryAdapter = new PricesHistoryAdapter(ProductDetail.this, getPriceHistoryList()); //创建适配器  
+					priceHistoryView.setAdapter(priceHistoryAdapter);
+
+					break;
+				case ERROR:
+
+					break;
+
+				default:
+					break;
+				}
+			}
+		};
+
+		Runnable historyRunnable = new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Message msg = new Message();
+				StringBuffer parBuffer  = new StringBuffer();
+				parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
+				.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
+				.append("productid=").append(map.get("productId")).append("&")
+				.append("cityid=").append(getIntent().getSerializableExtra("CityID")).append("&")
+				.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid)));
+				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PRICEHISTORY)+"?"+parBuffer.toString());
+
+				try {
+					String datasString = retJsonObject.getString("data");
+					//					Log.d(getString(R.string.log_tag), "priceHistoryParameters："+parBuffer.toString());
+					//
+					//					Log.d(getString(R.string.log_tag), "pirceHistoryData："+datasString);
+					if (datasString.length() == 0) {
+						msg.what = ERROR;
+						msg.obj = retJsonObject.getString("info");
+					}else {
+
+						JSONArray jsonArray = retJsonObject.getJSONArray("data");
+						for (int i=0;i<jsonArray.length();i++) {
+							JSONObject item = jsonArray.getJSONObject(i);
+							Map<String, String> map = new HashMap<String, String>();
+							map.put("rprice", item.getString("rprice"));
+							map.put("gatherDateStr", item.getString("gatherDateStr"));
+							map.put("marketShort", item.getString("marketShort"));
+
+							getPriceHistoryList().add(map);
+						}
+						msg.what = SUCCESS;
+
+
+					}
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					msg.what = ERROR;
+
+				}
+				historyHandler.sendMessage(msg);
+
+			}
+		};
+		new Thread(historyRunnable).start();
+		
+		final Handler providerHandler = new Handler(){
+			@Override
+			public void handleMessage(Message msg)
+			{
+				switch (msg.arg1) {
+				case SUCCESS:
+					providerAdapter = new ProviderAdapter(ProductDetail.this, getProviderDataList()); //创建适配器  
+					providerView.setAdapter(providerAdapter);
+
+					break;
+				case ERROR:
+
+					break;
+
+				default:
+					break;
+				}
+			}
+		};
+		
+		Runnable dataRunnable = new Runnable() {
+
+			@Override
+			public void run() {
+
+				Message msg = new Message();
+				StringBuffer parBuffer  = new StringBuffer();
+				parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
+				.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
+				.append("categoryoId=").append(map.get("categoryoid"));
+				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_2PROVIDER)+"?"+parBuffer.toString());
+				try {
+					String datasString = retJsonObject.getString("data");
+					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
+					Log.d(getString(R.string.log_tag), "ProviderData："+datasString);
+
+					if (datasString.length() == 0) {
+						msg.what = ERROR;
+						msg.obj = retJsonObject.getString("info");
+					}else {
+
+						JSONArray jsonArray = retJsonObject.getJSONArray("data");
+						for (int i=0;i<jsonArray.length();i++) {
+							JSONObject item = jsonArray.getJSONObject(i);
+							Map<String, String> map = new HashMap<String, String>();
+							map.put("imageurl", item.getString("imageurl"));
+							map.put("providerName", item.getString("providerName"));
+							map.put("mainProduct", item.getString("mainProduct"));
+							map.put("contact", item.getString("contact"));
+							map.put("contactNumber", item.getString("contactNumber"));
+							map.put("companyAddress", item.getString("companyAddress"));
+							map.put("introduction", item.getString("introduction"));
+							map.put("promise", item.getString("promise"));
+							getProviderDataList().add(map);
+						}
+
+						msg.what = SUCCESS;
+
+					}
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					msg.what = ERROR;
+
+				}
+
+
+				providerHandler.sendMessage(msg);
+			}
+		};
+		new Thread(dataRunnable).start();
 
 	}
 	public String getInList() {
@@ -326,12 +479,24 @@ public class ProductDetail extends Activity {
 			opView.setText("移除清单");
 		}
 	}
-	
+
 	public List<Map<String,String>> getPriceDataList() {
 		return priceDataList;
 	}
 	public void setPriceDataList(List<Map<String,String>> priceDataList) {
 		this.priceDataList = priceDataList;
+	}
+	public List<Map<String,String>> getPriceHistoryList() {
+		return priceHistoryList;
+	}
+	public void setPriceHistoryList(List<Map<String,String>> priceHistoryList) {
+		this.priceHistoryList = priceHistoryList;
+	}
+	public List<Map<String,String>> getProviderDataList() {
+		return providerDataList;
+	}
+	public void setProviderDataList(List<Map<String,String>> providerDataList) {
+		this.providerDataList = providerDataList;
 	}
 
 

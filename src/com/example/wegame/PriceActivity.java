@@ -495,6 +495,8 @@ public class PriceActivity extends Activity{
 							intent.setClass(PriceActivity.this, ProductDetail.class);
 							intent.putExtra("Item", map);
 							intent.putExtra("CityName", getCityName());
+							intent.putExtra("CityID", getCityID());
+
 							startActivity(intent);
 
 

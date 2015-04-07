@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:focusable="false"
     android:orientation="horizontal" >
 
@@ -13,7 +14,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="left|center_vertical"
+        android:singleLine="true"
         android:text="@string/detail_prices_city"
         android:textColor="@drawable/color_text"
         android:textSize="14sp" />
@@ -25,6 +27,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_weight="1"
+        android:singleLine="true"
         android:text="@string/price_rprice"
         android:textColor="@drawable/color_text"
         android:textSize="14sp" />
@@ -37,6 +40,7 @@
         android:layout_marginRight="5dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:singleLine="true"
         android:text="@string/detail_marketShort"
         android:textColor="@drawable/color_text"
         android:textSize="14sp" />
@@ -49,6 +53,7 @@
         android:layout_marginRight="5dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:singleLine="true"
         android:text="@string/detail_releaseDate"
         android:textColor="@drawable/color_text"
         android:textSize="14sp" />
