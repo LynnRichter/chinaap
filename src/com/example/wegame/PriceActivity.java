@@ -81,6 +81,7 @@ public class PriceActivity extends Activity{
 	private RelativeLayout headView;
 	private int total;
 	private int page;
+	private int price_index;
 	@Override
 	protected void onCreate(Bundle savedInstanceStateBundle) {
 		super.onCreate(savedInstanceStateBundle);
@@ -107,11 +108,30 @@ public class PriceActivity extends Activity{
 		headView =(RelativeLayout)findViewById(R.id.price_head);
 		headView.setFocusable(true);
 		headView.setClickable(true);
+		setPrice_index(0);
 		headView.setOnTouchListener(new ListViewAndHeadViewTouchLinstener());
 		listView =(ListView)findViewById(R.id.price_content_list);
 		listView.setOnTouchListener(new ListViewAndHeadViewTouchLinstener());
-
-
+		View  headindex = (View)findViewById(R.id.price_head);
+		final ImageView arrowImage =(ImageView)findViewById(R.id.item_price_head_arrow);
+		headindex.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				if (getPrice_index() == 0) {
+					setPrice_index(1);
+				}
+				else
+				{
+					setPrice_index(0);
+				}
+				setPage(1);
+				setTotal(0);
+				getListItems().clear();
+				startLoad();
+			}
+		});
+		
 
 		final TextView dateView =(TextView)findViewById(R.id.price_btn_date);
 		SimpleDateFormat formatter = new SimpleDateFormat   ("yyyy-MM-dd");     
@@ -421,10 +441,10 @@ public class PriceActivity extends Activity{
 
 					}
 					else{
-						List<Map<String, String>> listitems = new ArrayList<Map<String, String>>();  
-						setListItems(listitems);
+						getListItems().clear();
 						setPage(1);
-
+						setTotal(0);
+						setPrice_index(0);
 						startLoad();
 					}
 				} 
@@ -482,6 +502,16 @@ public class PriceActivity extends Activity{
 
 				case DATA_SUCCESS:
 
+					if (getPrice_index() == 0) {
+						arrowImage.setImageResource(R.drawable.icon_none);;
+					}
+					else
+					{
+						arrowImage.setImageResource(R.drawable.icon_up);;
+					}
+					LHScrollView headScrollView = (LHScrollView)headView.findViewById(R.id.horizontalScrollView1);
+					headScrollView.smoothScrollTo(0, 0);
+					
 					listViewAdapter = new PriceAdapter(PriceActivity.this,R.layout.item_price); //¥¥Ω®  ≈‰∆˜   
 					listView.setAdapter(listViewAdapter);
 					listView.setOnItemClickListener(new OnItemClickListener() {
@@ -691,12 +721,12 @@ public class PriceActivity extends Activity{
 				.append("date=").append(getTimestamp()).append("&")
 				.append("productCategoryid=").append(getTyepID()).append("&")
 				.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid))).append("&")
-				.append("price_index=").append("1").append("&")
+				.append("price_index=").append(getPrice_index()).append("&")
 				.append("page=").append(getPage());
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PRICEINFO)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
-					//					Log.d(getString(R.string.log_tag), "Request Data£∫"+parBuffer.toString());
+//										Log.d(getString(R.string.log_tag), "PriceActivity Request Data£∫"+parBuffer.toString());
 					//					Log.d(getString(R.string.log_tag), "PriceData£∫"+datasString);
 
 					if (datasString.length() == 0) {
@@ -806,6 +836,12 @@ public class PriceActivity extends Activity{
 	}
 	public void setPage(int page) {
 		this.page = page;
+	}
+	public int getPrice_index() {
+		return price_index;
+	}
+	public void setPrice_index(int price_index) {
+		this.price_index = price_index;
 	}
 	public class PriceAdapter extends BaseAdapter {
 		public List<ViewHolder> mHolderList = new ArrayList<ViewHolder>();

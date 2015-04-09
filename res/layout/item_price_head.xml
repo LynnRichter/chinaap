@@ -75,7 +75,7 @@
 
                 <TextView
                     android:id="@+id/item_price_head_priceIndex"
-                    android:layout_width="80dp"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
@@ -83,7 +83,13 @@
                     android:text="@string/price_priceIndex"
                     android:textColor="@drawable/color_text"
                     android:textSize="14sp" />
-
+				<ImageView 
+				    android:id="@+id/item_price_head_arrow"
+				    android:layout_width="10dp"
+				    android:layout_height="10dp"
+				    android:layout_marginTop="5dp"
+				    android:src="@drawable/icon_none"
+				    android:scaleType="centerInside"/>
                 <TextView
                     android:id="@+id/item_price_marketShort"
                     android:layout_width="80dp"

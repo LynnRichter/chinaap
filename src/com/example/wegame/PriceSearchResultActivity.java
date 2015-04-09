@@ -1,5 +1,7 @@
 package com.example.wegame;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import org.json.JSONObject;
 
 import com.example.wegame.LHScrollView.OnScrollChangedListener;
 
+import android.R.color;
+import android.R.integer;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -31,7 +35,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -39,6 +47,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -65,17 +74,22 @@ public class PriceSearchResultActivity extends Activity{
 	private static final int TYPE_SUCCESS = 2;
 	private static final int TYPE_ERROR = 3;
 	private static final int DATA_SUCCESS = 4;
-	private static final int DATA_ERROR = 5;
 	private static final int DATA_EMPTY = 7;
+	private static final int DATA_ERROR = 5;
 	private static final int EXCEPTION	= 6;
 
 	private Handler dataHandler = null;
+	private Handler listHandler = null;
 	private String tyepID,cityID,typeName,cityName,dateString,timestamp,sortIndex;
 	private PriceAdapter listViewAdapter; 
 	private ListView listView;
 	private List<Map<String,String>> listItems;
 	private RelativeLayout headView;
+	private int total;
+	private int page;
+	private int price_index;
 	private EditText editText;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceStateBundle) {
 		super.onCreate(savedInstanceStateBundle);
@@ -106,6 +120,9 @@ public class PriceSearchResultActivity extends Activity{
 		listView =(ListView)findViewById(R.id.price_search_content_list);
 		listView.setOnTouchListener(new ListViewAndHeadViewTouchLinstener());
 
+		List<Map<String, String>> listitems = new ArrayList<Map<String, String>>();  
+		setListItems(listitems);
+
 		editText =(EditText)findViewById(R.id.price_search_input);
 		Intent intent =getIntent();
 		editText.setText(intent.getStringExtra("InputKey"));
@@ -113,8 +130,34 @@ public class PriceSearchResultActivity extends Activity{
 
 			@Override
 			public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+				// TODO Auto-generated method stub
+				setPage(1);
+				setTotal(0);
+				getListItems().clear();
 				startLoad();
 				return false;
+			}
+		});
+
+		setPrice_index(0);
+
+		View  headindex = (View)findViewById(R.id.price_search_head);
+		final ImageView arrowImage =(ImageView)findViewById(R.id.item_price_head_arrow);
+		headindex.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				if (getPrice_index() == 0) {
+					setPrice_index(1);
+				}
+				else
+				{
+					setPrice_index(0);
+				}
+				setPage(1);
+				setTotal(0);
+				getListItems().clear();
+				startLoad();
 			}
 		});
 
@@ -250,7 +293,6 @@ public class PriceSearchResultActivity extends Activity{
 					}
 
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					msg.what = EXCEPTION;
 
@@ -296,6 +338,10 @@ public class PriceSearchResultActivity extends Activity{
 
 					});   
 					setTyepID("1");
+					setPage(1);
+					setTotal(0);
+
+					getListItems().clear();
 					startLoad();					
 					break;
 				case TYPE_ERROR:
@@ -376,56 +422,50 @@ public class PriceSearchResultActivity extends Activity{
 			@Override
 			public void onClick(View arg0) {
 
-				try {
-					Date curDate = new Date(System.currentTimeMillis());//获取当前时间  
-					Date toData = new SimpleDateFormat("yyyy-MM-dd").parse(dateView.getText().toString());
-					Log.d(getString(R.string.log_tag), "相隔天数："+ JSONHelpler.getGapCount(curDate,toData));
-
-					if (JSONHelpler.getGapCount(curDate,toData) >= -90 && !JSONHelpler.getLogin(getApplicationContext())) {
-						Toast toast = Toast.makeText(getApplicationContext(),
-								getString(R.string.price_search_tips), Toast.LENGTH_LONG);
-						toast.setGravity(Gravity.CENTER, 0, 0);
-						toast.show();
-						Runnable waitRunnable  =new Runnable() {
-
-							@Override
-							public void run() {
-								// TODO Auto-generated method stub
-								Message msg = new Message();
-								try {
-									Thread.sleep(4000);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								msg.what = 0;
-								handler.sendMessage(msg);
-
-							}
-						};
-						new Thread(waitRunnable).start();
-						//						Thread.sleep(3000);
-						//						Intent intent = new Intent();
-						//						intent.setClass(PriceActivity.this, LoginActivity.class);
-						//						startActivity(intent);
-
-					}
-					else{
-						startLoad();
-					}
-				} 
-				catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-				//				catch (InterruptedException e) {
-				//					// TODO Auto-generated catch block
-				//					e.printStackTrace();
-				//				}
-
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(editText.getWindowToken(), 0); //强制隐藏键盘
+				getListItems().clear();
+				setPage(1);
+				setTotal(0);
+				setPrice_index(0);
+				startLoad(); 
 
 			}
 		});
+
+		listHandler = new Handler(){
+			@Override
+			public void handleMessage(Message msg)
+			{
+				Toast toast = Toast.makeText(getApplicationContext(),
+						(String)msg.obj, Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+				View itemView = listView.getChildAt(msg.arg1 - listView.getFirstVisiblePosition());
+				if (itemView != null) {
+					TextView lisTextView = (TextView) itemView.findViewById(R.id.item_price_list);
+					if (lisTextView != null) {// 当item可见的时候更新
+						switch (msg.arg2) {
+						case 0:
+							lisTextView.setBackgroundResource(R.drawable.main_price_start_bg);
+							Log.d(getString(R.string.log_tag), "取消清单："+msg.arg1+"行");
+
+							lisTextView.setTextColor(android.graphics.Color.WHITE);
+							lisTextView.setText(getString(R.string.price_addlist));
+							break;
+						case 1:
+							lisTextView.setBackgroundResource(R.drawable.color_grayback);
+							lisTextView.setTextColor(R.drawable.color_white);
+							lisTextView.setText("长按移除清单");
+							break;
+						default:
+							break;
+						}
+
+					}
+				}
+			}
+		};
 
 		dataHandler = new Handler()
 		{
@@ -434,7 +474,18 @@ public class PriceSearchResultActivity extends Activity{
 			{
 				Toast toast = null;
 				switch (msg.what) {
+
 				case DATA_SUCCESS:
+
+					if (getPrice_index() == 0) {
+						arrowImage.setImageResource(R.drawable.icon_none);;
+					}
+					else
+					{
+						arrowImage.setImageResource(R.drawable.icon_up);;
+					}
+					LHScrollView headScrollView = (LHScrollView)headView.findViewById(R.id.horizontalScrollView1);
+					headScrollView.smoothScrollTo(0, 0);
 
 					listViewAdapter = new PriceAdapter(PriceSearchResultActivity.this,R.layout.item_price); //创建适配器   
 					listView.setAdapter(listViewAdapter);
@@ -443,17 +494,158 @@ public class PriceSearchResultActivity extends Activity{
 						@Override
 						public void onItemClick(AdapterView<?> arg0, View arg1,
 								int arg2, long arg3) {
+							//							Log.d(getString(R.string.log_tag), "你单击了第："+arg2+"行");
+							HashMap<String,String> map=(HashMap<String,String>)getListItems().get(arg2);   
+							Intent intent = new Intent();
+							intent.setClass(PriceSearchResultActivity.this, ProductDetail.class);
+							intent.putExtra("Item", map);
+							intent.putExtra("CityName", getCityName());
+							intent.putExtra("CityID", getCityID());
+
+							startActivity(intent);
+
+
+						}
+					});
+					listView.setOnScrollListener(new OnScrollListener() {
+
+						@Override
+						public void onScrollStateChanged(AbsListView view, int scrollState) {
 							// TODO Auto-generated method stub
-							//							HashMap<String,String> map=(HashMap<String,String>)getListItems().get(arg2);   
-							//							Intent intent = new Intent();
-							//							intent.setClass(PriceActivity.this, ProviderDetailActivity.class);
-							//							intent.putExtra("Item", map);
-							//							startActivity(intent);
-							Log.d(getString(R.string.log_tag), "你选择了第："+arg2+"行");
+							if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+								//判断是否滚动到底部
+								if (view.getLastVisiblePosition() == view.getCount() - 1) {
+									Log.d(getString(R.string.log_tag), "滚动到了底部！");
+									if (getListItems().size() < getTotal()) {
+										int tempPage =getPage();
+										tempPage++;
+										setPage(tempPage);
+										startLoad();
+									}
+
+								}
+							}
+
+						}
+
+						@Override
+						public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
+							// TODO Auto-generated method stub
+
+						}
+					});
+					listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+						@Override
+						public boolean onItemLongClick(AdapterView<?> arg0,
+								View arg1, int arg2, long arg3) {
+							// TODO Auto-generated method stub
+							final int index = arg2;
+							//							Log.d(getString(R.string.log_tag), "你长按了第："+arg2+"行");
+
+							if (!JSONHelpler.getLogin(getApplicationContext())) {
+								Toast toast = Toast.makeText(getApplicationContext(),
+										getString(R.string.list_tips), Toast.LENGTH_LONG);
+								toast.setGravity(Gravity.CENTER, 0, 0);
+								toast.show();
+								Runnable waitRunnable  =new Runnable() {
+
+									@Override
+									public void run() {
+										// TODO Auto-generated method stub
+										Message msg = new Message();
+										try {
+											Thread.sleep(4000);
+										} catch (InterruptedException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										msg.what = 0;
+										handler.sendMessage(msg);
+
+									}
+								};
+								new Thread(waitRunnable).start();
+							}else {
+								Runnable addList = new Runnable() {
+									@Override
+									public void run() {
+										Message msg = new Message();
+										StringBuffer parBuffer  = new StringBuffer();
+										Log.d(getString(R.string.log_tag), "选择了"+getListItems().get(index).get("isInUserPurchaseList")+"行");
+										parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
+										.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
+										.append("productid=").append(getListItems().get(index).get("productId")).append("&")
+										.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid))).append("&")
+										.append("marketoid=").append(getListItems().get(index).get("marketoid"));
+
+										if (getListItems().get(index).get("isInUserPurchaseList").equals("false")) {
+											//添加到采购清单
+
+
+
+											JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_ADDLIST)+"?"+parBuffer.toString());
+											try {
+												String datasString = retJsonObject.getString("data");
+												if (datasString.length() == 0) {
+													msg.obj=retJsonObject.getString("info");
+												}else{
+													msg.obj = datasString;
+													getListItems().get(index).remove("isInUserPurchaseList"); 
+													getListItems().get(index).put("isInUserPurchaseList","true");
+												}
+
+												//												Log.d(getString(R.string.log_tag), "RequestData："+parBuffer.toString());
+												//												Log.d(getString(R.string.log_tag), "addListData："+datasString);
 
 
 
 
+
+											} catch (JSONException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+
+											}
+											msg.arg2 =1;
+
+
+
+										}else
+										{
+											//从采购清单删除
+
+											JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_DELLIST)+"?"+parBuffer.toString());
+											try {
+												String datasString = retJsonObject.getString("data");
+												if (datasString.length() == 0) {
+													msg.obj=retJsonObject.getString("info");
+												}else{
+													msg.obj = datasString;
+													getListItems().get(index).remove("isInUserPurchaseList"); 
+													getListItems().get(index).put("isInUserPurchaseList","false");												}
+
+											} catch (JSONException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+
+											}
+											msg.arg2 = 0;
+
+
+
+										}
+										msg.arg1=index;
+										listHandler.sendMessage(msg);
+
+									}
+								};
+								new Thread(addList).start();
+							}
+
+
+
+							return true;
 						}
 					});
 					break;
@@ -470,6 +662,12 @@ public class PriceSearchResultActivity extends Activity{
 					toast.show();
 					break;
 
+				case DATA_EMPTY:
+					toast = Toast.makeText(getApplicationContext(),
+							"当前检索条件并无数据，请重新设置检索条件", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+					break;
 				default:
 					toast = Toast.makeText(getApplicationContext(),
 							getString(R.string.error_msg), Toast.LENGTH_SHORT);
@@ -481,28 +679,32 @@ public class PriceSearchResultActivity extends Activity{
 		};
 
 
+
+
 	}
 	private void startLoad()
 	{
 		Runnable dataRunnable = new Runnable() {
-
 			@Override
 			public void run() {
-				List<Map<String, String>> listitems = new ArrayList<Map<String, String>>();  
-				setListItems(listitems);
+
 				Message msg = new Message();
 				StringBuffer parBuffer  = new StringBuffer();
-				parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
-				.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
-				.append("cityId=").append(getCityID()).append("&")
-				.append("productCategoryid=").append(getTyepID()).append("&")
-				.append("productname=").append(editText.getText().toString()).append("&")
-				.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid)));
+				try {
+					parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
+					.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
+					.append("cityid=").append(getCityID()).append("&")
+					.append("productCategoryid=").append(getTyepID()).append("&")
+					.append("productname=").append(URLEncoder.encode(editText.getText().toString(), "UTF-8")).append("&")
+					.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid)));
+				} catch (UnsupportedEncodingException e1) {
+					e1.printStackTrace();
+				}
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_FINDPRICE)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
-					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
-					Log.d(getString(R.string.log_tag), "PriceData："+datasString);
+//					Log.d(getString(R.string.log_tag), "PriceActivity Request Data："+parBuffer.toString());
+//					Log.d(getString(R.string.log_tag), "PriceData："+datasString);
 
 					if (datasString.length() == 0) {
 						msg.what = DATA_ERROR;
@@ -510,21 +712,35 @@ public class PriceSearchResultActivity extends Activity{
 					}else {
 
 						JSONArray jsonArray = retJsonObject.getJSONArray("data");
-						for (int i=0;i<jsonArray.length();i++) {
-							JSONObject item = jsonArray.getJSONObject(i);
-							Map<String, String> map = new HashMap<String, String>();
-							map.put("productName", item.getString("productName"));
-							map.put("spec", item.getString("spec"));
-							map.put("rprice", item.getString("rprice"));
-							map.put("unit", item.getString("unit"));
-							map.put("priceIndex", item.getString("priceIndex"));
-							map.put("marketShort", item.getString("marketShort"));
-							map.put("releaseDate", item.getString("releaseDate"));
-							getListItems().add(map);
-						}
+						setTotal(retJsonObject.getInt("total"));
+						if (jsonArray.length() == 0) {
 
-						msg.what = DATA_SUCCESS;
-						msg.obj = retJsonObject.getString("total");
+							msg.what = DATA_EMPTY;
+						}
+						else
+						{
+							for (int i=0;i<jsonArray.length();i++) {
+								JSONObject item = jsonArray.getJSONObject(i);
+								Map<String, String> map = new HashMap<String, String>();
+								map.put("productName", item.getString("productName"));
+								map.put("spec", item.getString("spec"));
+								map.put("rprice", item.getString("rprice"));
+								map.put("unit", item.getString("unit"));
+								map.put("priceIndex", item.getString("priceIndex"));
+								map.put("marketShort", item.getString("marketShort"));
+								map.put("releaseDate", item.getString("releaseDate"));
+								map.put("marketoid", item.getString("marketoid"));
+								map.put("productId", item.getString("productId"));
+
+								//							Log.d(getString(R.string.log_tag), "isInUserPurchaseList ："+item.getString("isInUserPurchaseList"));
+
+								map.put("isInUserPurchaseList", item.getString("isInUserPurchaseList"));
+								getListItems().add(map);
+							}
+
+							msg.what = DATA_SUCCESS;
+							//							msg.obj = retJsonObject.getString("total");
+						}
 
 					}
 
@@ -586,6 +802,24 @@ public class PriceSearchResultActivity extends Activity{
 	}
 
 
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getPrice_index() {
+		return price_index;
+	}
+	public void setPrice_index(int price_index) {
+		this.price_index = price_index;
+	}
 	public class PriceAdapter extends BaseAdapter {
 		public List<ViewHolder> mHolderList = new ArrayList<ViewHolder>();
 
@@ -645,16 +879,13 @@ public class PriceSearchResultActivity extends Activity{
 					holder.marketShort_text =(TextView) convertView.findViewById(R.id.item_price_marketShort);
 					holder.releaseDate_text =(TextView) convertView.findViewById(R.id.item_price_releaseDate);
 					holder.list_text =(TextView) convertView.findViewById(R.id.item_price_list);
+					//					Log.d(getString(R.string.log_tag), "isInUserPurchaseList ："+getListItems().get(position).get("isInUserPurchaseList").toString());
 
-					holder.list_text.setOnClickListener(new OnClickListener() {
-
-						@Override
-						public void onClick(View arg0) {
-
-							Log.d(getString(R.string.log_tag), "你点击了第："+index+"行的按钮");
-
-						}
-					});
+					if (getListItems().get(position).get("isInUserPurchaseList").toString().equals("true")) {
+						holder.list_text.setBackgroundResource(R.drawable.color_grayback);
+						holder.list_text.setTextColor(R.drawable.color_white);
+						holder.list_text.setText("长按移除清单");
+					}
 					convertView.setTag(holder);
 					mHolderList.add(holder);
 					if (position%2 != 0) {
@@ -671,7 +902,7 @@ public class PriceSearchResultActivity extends Activity{
 			holder.spec_text.setText(getListItems().get(position).get("spec"));
 			holder.rprice_text.setText(" ￥"+getListItems().get(position).get("rprice"));
 			holder.unit_text.setText(getListItems().get(position).get("unit"));
-			holder.priceIndex_text.setText(getListItems().get(position).get("priceIndex").endsWith("null") ? "0" :getListItems().get(position).get("priceIndex"));
+			holder.priceIndex_text.setText(getListItems().get(position).get("priceIndex").equals("null") ? "0" :getListItems().get(position).get("priceIndex"));
 			holder.marketShort_text.setText(getListItems().get(position).get("marketShort"));
 			holder.releaseDate_text.setText(getListItems().get(position).get("releaseDate"));
 

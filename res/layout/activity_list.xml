@@ -97,7 +97,7 @@
             android:textSize="14sp" />
     </LinearLayout>
 	<include
-        android:id="@+id/price_head"
+        android:id="@+id/list_view_head"
         layout="@layout/item_price_head"
         android:layout_marginTop="5dp"/>
 	<ListView
