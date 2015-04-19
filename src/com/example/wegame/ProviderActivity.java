@@ -223,8 +223,7 @@ public class ProviderActivity extends Activity {
 						}
 
 					});   
-					setTyepID("1");
-					startLoad();
+					defaultLoad();
 					break;
 				case TYPE_ERROR:
 					toast = Toast.makeText(getApplicationContext(),
@@ -352,6 +351,63 @@ public class ProviderActivity extends Activity {
 
 
 	}
+	private void defaultLoad()
+	{
+		Runnable dataRunnable = new Runnable() {
+
+			@Override
+			public void run() {
+				List<Map<String, String>> listitems = new ArrayList<Map<String, String>>();  
+				setListItems(listitems);
+				Message msg = new Message();
+				StringBuffer parBuffer  = new StringBuffer();
+				parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
+				.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
+				.append("cityId=").append(getCityID());
+				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PROVIDERLIST)+"?"+parBuffer.toString());
+				try {
+					String datasString = retJsonObject.getString("data");
+					Log.d(getString(R.string.log_tag), "Request Data£º"+parBuffer.toString());
+//					Log.d(getString(R.string.log_tag), "ProviderData£º"+datasString);
+
+					if (datasString.length() == 0) {
+						msg.what = DATA_ERROR;
+						msg.obj = retJsonObject.getString("info");
+					}else {
+
+						JSONArray jsonArray = retJsonObject.getJSONArray("data");
+						for (int i=0;i<jsonArray.length();i++) {
+							JSONObject item = jsonArray.getJSONObject(i);
+							Map<String, String> map = new HashMap<String, String>();
+							map.put("imageurl", item.getString("imageurl"));
+							map.put("providerName", item.getString("providerName"));
+							map.put("mainProduct", item.getString("mainProduct"));
+							map.put("contact", item.getString("contact"));
+							map.put("contactNumber", item.getString("contactNumber"));
+							map.put("companyAddress", item.getString("companyAddress"));
+							map.put("introduction", item.getString("introduction"));
+							map.put("promise", item.getString("promise"));
+							getListItems().add(map);
+						}
+
+						msg.what = DATA_SUCCESS;
+						msg.obj = retJsonObject.getString("total");
+
+					}
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					msg.what = EXCEPTION;
+
+				}
+
+
+				dataHandler.sendMessage(msg);
+			}
+		};
+		new Thread(dataRunnable).start();
+	}
 	private void startLoad()
 	{
 
@@ -370,7 +426,7 @@ public class ProviderActivity extends Activity {
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PROVIDERLIST)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
-//					Log.d(getString(R.string.log_tag), "Request Data£º"+parBuffer.toString());
+					Log.d(getString(R.string.log_tag), "Request Data£º"+parBuffer.toString());
 //					Log.d(getString(R.string.log_tag), "ProviderData£º"+datasString);
 
 					if (datasString.length() == 0) {

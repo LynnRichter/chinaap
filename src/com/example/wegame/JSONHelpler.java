@@ -204,6 +204,21 @@ public class JSONHelpler {
 		SharedPreferences userPreferences = ctx.getSharedPreferences("UserInfo", 0);
 		return userPreferences.getBoolean("login", false);
 	}
+//	设置第一次状态
+	public static void setFirst(Context ctx,boolean value)
+	{
+		SharedPreferences userPreferences = ctx.getSharedPreferences("UserInfo", 0);
+		Editor editor = userPreferences.edit();
+		editor.putBoolean("first", value);
+		editor.commit();
+	}
+//	获取第一次状态
+	public static boolean getFirst(Context ctx)
+	{
+		SharedPreferences userPreferences = ctx.getSharedPreferences("UserInfo", 0);
+		return userPreferences.getBoolean("first", false);
+	}
+	
 	
 
 }

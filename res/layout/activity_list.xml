@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@drawable/color_white">
+    android:background="@drawable/color_white"
+    android:orientation="vertical" >
 
     <!-- 查价格主页 -->
     <!-- 头部导航栏 -->
@@ -34,8 +34,6 @@
             android:text="@string/main_list"
             android:textColor="@drawable/color_white"
             android:textSize="18sp" />
-
-        
     </RelativeLayout>
 
     <LinearLayout
@@ -48,7 +46,8 @@
         android:paddingRight="5dp"
         android:paddingTop="2dp" >
 
-        <Spinner
+        <!--
+             <Spinner
             android:id="@+id/price_spinner_city"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -57,6 +56,32 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/price_spinner_bg" />
+        -->
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/price_spinner_bg" >
+
+            <Spinner
+                android:id="@+id/price_spinner_city"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:paddingLeft="2dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:text="▼" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/price_spinner_category"
@@ -67,9 +92,9 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/price_spinner_bg"
-            android:textColor="@drawable/color_black"
+            android:gravity="center"
             android:text="@string/main_list"
-            android:gravity="center" />
+            android:textColor="@drawable/color_black" />
 
         <TextView
             android:id="@+id/price_btn_date"
@@ -80,8 +105,8 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/price_spinner_bg"
-            android:textColor="@drawable/color_black"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="@drawable/color_black" />
 
         <Button
             android:id="@+id/price_button_start"
@@ -96,11 +121,13 @@
             android:textColor="@drawable/color_white"
             android:textSize="14sp" />
     </LinearLayout>
-	<include
+
+    <include
         android:id="@+id/list_view_head"
-        layout="@layout/item_price_head"
-        android:layout_marginTop="5dp"/>
-	<ListView
+        android:layout_marginTop="5dp"
+        layout="@layout/item_price_head" />
+
+    <ListView
         android:id="@+id/price_content_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -109,4 +136,5 @@
         android:cacheColorHint="@android:color/transparent"
         android:divider="@null" >
     </ListView>
+
 </LinearLayout>

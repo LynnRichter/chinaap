@@ -36,7 +36,7 @@ public class ProductDetail extends Activity {
 	private PricesHistoryAdapter priceHistoryAdapter;
 	private List<Map<String,String>> providerDataList;
 	private ProviderAdapter providerAdapter;
-
+//	ChartFactory.getLineChartView(context, mDataset, mRenderer),
 	@Override
 	protected void onCreate(Bundle savedInstanceStateBundle) {
 		super.onCreate(savedInstanceStateBundle);

@@ -17,8 +17,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -95,6 +97,19 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
+				Intent intent = new Intent();
+				intent.putExtra("InputKey", editText.getText().toString());
+				intent.setClass(MainActivity.this, PriceSearchResultActivity.class);
+				startActivity(intent);
+				return false;
+			}
+		});
+//		µã»÷ËÑË÷Í¼±ê
+		ImageView searchImageView = (ImageView)findViewById(R.id.main_search_btn);
+		searchImageView.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
 				Intent intent = new Intent();
 				intent.putExtra("InputKey", editText.getText().toString());
 				intent.setClass(MainActivity.this, PriceSearchResultActivity.class);

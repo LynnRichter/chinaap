@@ -102,6 +102,25 @@ public class PriceActivity extends Activity{
 	}
 	private void UIFactory()
 	{
+		final RelativeLayout tipsLayout = (RelativeLayout)findViewById(R.id.tips_view);
+		if (JSONHelpler.getFirst(getApplicationContext())) {
+			tipsLayout.setVisibility(View.GONE);
+			
+		}
+		else
+		{
+//			tipsLayout.setVisibility(View.GONE);
+			tipsLayout.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					
+					tipsLayout.setVisibility(View.GONE);
+					JSONHelpler.setFirst(getApplicationContext(), true);
+				}
+			});
+			
+		}
 
 		citySpinner = (Spinner)findViewById(R.id.price_spinner_city);
 		typeSpinner = (Spinner)findViewById(R.id.price_spinner_category);
