@@ -23,7 +23,7 @@
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/bank_home_ico" />
+            android:src="@drawable/bank_ico" />
 
         <TextView
             android:id="@+id/detail_title"
@@ -187,7 +187,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="8dp"
-                    android:textColor="@drawable/color_textRed"
+                    android:textColor="@drawable/color_purple"
                     android:textSize="14sp" />
             </LinearLayout>
             <!-- 价格来源 -->
@@ -355,6 +355,14 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/color_topback" />
             </RelativeLayout>
+            <LinearLayout 
+                android:id="@+id/detail_line_parent"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/color_grayback"
+                android:orientation="vertical">
+                
+            </LinearLayout>
             <!-- 历年价格 -->
 
             <RelativeLayout

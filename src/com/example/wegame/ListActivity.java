@@ -215,6 +215,7 @@ public class ListActivity extends Activity{
 
 					});  
 					setCityID("1");
+					setPage(1);
 					startLoad();
 
 					break;
@@ -323,10 +324,6 @@ public class ListActivity extends Activity{
 						}
 					};
 					new Thread(waitRunnable).start();
-					//						Thread.sleep(3000);
-					//						Intent intent = new Intent();
-					//						intent.setClass(ListActivity.this, LoginActivity.class);
-					//						startActivity(intent);
 
 				}
 				else{
@@ -634,7 +631,7 @@ public class ListActivity extends Activity{
 				.append("productCategoryid=").append(getTyepID()).append("&")
 				.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid))).append("&")
 				.append("price_index=").append("1").append("&")
-				.append("page=").append("1");
+				.append("page=").append(getPage());
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PRICEINFO)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");

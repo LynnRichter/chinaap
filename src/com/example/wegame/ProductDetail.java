@@ -5,12 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.PointStyle;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.color;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint.Align;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +31,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +48,7 @@ public class ProductDetail extends Activity {
 	private PricesHistoryAdapter priceHistoryAdapter;
 	private List<Map<String,String>> providerDataList;
 	private ProviderAdapter providerAdapter;
-//	ChartFactory.getLineChartView(context, mDataset, mRenderer),
+	//	ChartFactory.getLineChartView(context, mDataset, mRenderer),
 	@Override
 	protected void onCreate(Bundle savedInstanceStateBundle) {
 		super.onCreate(savedInstanceStateBundle);
@@ -325,6 +337,11 @@ public class ProductDetail extends Activity {
 					priceHistoryAdapter = new PricesHistoryAdapter(ProductDetail.this, getPriceHistoryList()); //创建适配器  
 					priceHistoryView.setAdapter(priceHistoryAdapter);
 
+					//					ChartService lineService = new ChartService(ProductDetail.this);
+					//					lineService.setXYMultipleSeriesDataset("价格走势");
+					//					lineService.setXYMultipleSeriesRenderer(100, 40, "", "日期", "价格", Color.GRAY, Color.BLACK, Color.GRAY, Color.WHITE);
+					LinearLayout chartLayout = (LinearLayout)findViewById(R.id.detail_line_parent);
+					chartLayout.addView(lineView());
 					break;
 				case ERROR:
 
@@ -386,7 +403,7 @@ public class ProductDetail extends Activity {
 			}
 		};
 		new Thread(historyRunnable).start();
-		
+
 		final Handler providerHandler = new Handler(){
 			@Override
 			public void handleMessage(Message msg)
@@ -406,7 +423,7 @@ public class ProductDetail extends Activity {
 				}
 			}
 		};
-		
+
 		Runnable dataRunnable = new Runnable() {
 
 			@Override
@@ -499,6 +516,72 @@ public class ProductDetail extends Activity {
 		this.providerDataList = providerDataList;
 	}
 
+	//折线图
+	public GraphicalView lineView(){
+		//同样是需要数据dataset和视图渲染器renderer
+		XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();
+		XYSeries  series = new XYSeries("价格趋势");
+		double marxY = 0;
+		for(int i = 0;i<getPriceHistoryList().size();i++)
+		{
+			
+			double rprice = Double.parseDouble( getPriceHistoryList().get(i).get("rprice"));
+			series.add(i,rprice);
+			if(rprice>marxY)
+			{
+				marxY = rprice;
+			}
+		}
+		mDataset.addSeries(series);
+		XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
+		//设置图表的X轴的当前方向
+		mRenderer.setOrientation(XYMultipleSeriesRenderer.Orientation.HORIZONTAL);
+		mRenderer.setXTitle("日期");//设置为X轴的标题
+		mRenderer.setYTitle("价格");//设置y轴的标题
+		mRenderer.setAxisTitleTextSize(14);//设置轴标题文本大小
+		mRenderer.setChartTitle("");//设置图表标题
+		mRenderer.setChartTitleTextSize(30);//设置图表标题文字的大小
+		mRenderer.setLabelsTextSize(14);//设置标签的文字大小
+		mRenderer.setLegendTextSize(14);//设置图例文本大小
+		mRenderer.setPointSize(5f);//设置点的大小
+		mRenderer.setYAxisMin(0);//设置y轴最小值是0
+		mRenderer.setYAxisMax(marxY *1.2);
+		mRenderer.setYLabels(10);//设置Y轴刻度个数（貌似不太准确）
+		mRenderer.setYLabelsAlign(Align.LEFT);
+		mRenderer.setXAxisMax(getPriceHistoryList().size());
+		mRenderer.setShowGrid(true);//显示网格
+		for(int i = 0;i<getPriceHistoryList().size();i++)
+		{
+			if (i == 1 ||i==getPriceHistoryList().size()-1) {
+				mRenderer.addXTextLabel(i, getPriceHistoryList().get(i).get("gatherDateStr"));
+			}else {
+				mRenderer.addXTextLabel(i,"");
 
+			}
+			
+			
+			
+		}
+		mRenderer.setXLabels(0);//设置只显示如1月，2月等替换后的东西，不显示1,2,3等
+		mRenderer.setMargins(new int[] { 0, 15, 0, 0 });//设置视图位置
+		mRenderer.setInScroll(false);
+		mRenderer.setMarginsColor(Color.WHITE);
+		XYSeriesRenderer r = new XYSeriesRenderer();//(类似于一条线对象)
+		
+		r.setColor(Color.BLUE);//设置颜色
+		r.setPointStyle(PointStyle.CIRCLE);//设置点的样式
+		r.setFillPoints(true);//填充点（显示的点是空心还是实心）
+		r.setDisplayChartValues(true);//将点的值显示出来
+		r.setChartValuesSpacing(10);//显示的点的值与图的距离
+		r.setChartValuesTextSize(14);//点的值的文字大小
+
+		//  r.setFillBelowLine(true);//是否填充折线图的下方
+		//  r.setFillBelowLineColor(Color.GREEN);//填充的颜色，如果不设置就默认与线的颜色一致
+		r.setLineWidth(3);//设置线宽
+		mRenderer.addSeriesRenderer(r);
+		GraphicalView  view = ChartFactory.getLineChartView(this, mDataset, mRenderer);
+		view.setBackgroundColor(Color.WHITE);
+		return view;
+	}
 
 }

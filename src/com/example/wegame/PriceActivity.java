@@ -345,7 +345,11 @@ public class PriceActivity extends Activity{
 					});   
 					setTyepID("1");
 					setPage(1);
-
+					Calendar c = Calendar.getInstance();  
+		            c.setTime(new Date(System.currentTimeMillis()));  
+		            c.add(c.MONTH, -3);  
+		            Date temp_date = c.getTime();
+					setTimestamp(Long.toString(temp_date.getTime()));
 					List<Map<String, String>> listitems = new ArrayList<Map<String, String>>();  
 					setListItems(listitems);
 					startLoad();					
