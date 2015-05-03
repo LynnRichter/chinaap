@@ -65,11 +65,11 @@ public class MainActivity extends Activity {
 			@Override
 			public void run() {
 				try {
-					Log.d(getString(R.string.log_tag), "获取到了IP地址:"+JSONHelpler.GetNetIp());
+//					Log.d(getString(R.string.log_tag), "获取到了IP地址:"+JSONHelpler.GetNetIp());
 					StringBuffer parBuffer  = new StringBuffer();
 					parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&").append("client_str=").append(getString(R.string.CLIENT_STR)).append("&").append("ip=").append(JSONHelpler.GetNetIp());
 					JSONObject ipJsonObject = JSONHelpler.getJason(getString(R.string.URL_IPINFO)+"?"+parBuffer);
-					Log.d(getString(R.string.log_tag), "当前所在城市："+ipJsonObject.getJSONObject("data").getString("city"));
+//					Log.d(getString(R.string.log_tag), "当前所在城市："+ipJsonObject.getJSONObject("data").getString("city"));
 					Message msg = new Message();
 					msg.what = GETCITY;
 					msg.obj = ipJsonObject.getJSONObject("data").getString("city");
@@ -82,15 +82,7 @@ public class MainActivity extends Activity {
 			}
 		};
 		new Thread(threadRunnable).start();
-//点击搜索按钮
-		ImageView searchBtn =(ImageView)this.findViewById(R.id.main_search_btn);
-		searchBtn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				
-			}
-		});
+
 		
 		final EditText editText =(EditText)findViewById(R.id.main_search);
 		editText.setOnEditorActionListener(new OnEditorActionListener() {
@@ -110,6 +102,8 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public boolean onTouch(View arg0, MotionEvent arg1) {
+				Log.d(getString(R.string.log_tag), "执行了一次搜索按钮");
+
 				Intent intent = new Intent();
 				intent.putExtra("InputKey", editText.getText().toString());
 				intent.setClass(MainActivity.this, PriceSearchResultActivity.class);

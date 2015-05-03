@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@drawable/color_white">
+    android:background="@drawable/color_white"
+    android:orientation="vertical" >
 
     <!-- 顶部导航栏 -->
 
@@ -23,7 +23,7 @@
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/bank_home_ico" />
+            android:src="@drawable/bank_ico" />
 
         <TextView
             android:id="@+id/main_city"
@@ -40,27 +40,28 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp" >
-        <ImageView 
+
+        <ImageView
             android:layout_width="156dp"
             android:layout_height="44dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/about_logo"
             android:layout_centerInParent="true"
-            android:contentDescription="@string/pic_placehold"/>
-        
+            android:contentDescription="@string/pic_placehold"
+            android:scaleType="centerInside"
+            android:src="@drawable/about_logo" />
     </RelativeLayout>
-        <RelativeLayout
+
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" 
-        android:padding="10dp">
-        <TextView 
+        android:layout_marginTop="8dp"
+        android:padding="10dp" >
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_detail"
-            android:textSize="18sp"
-            android:textColor="@drawable/color_text"/>
-        
+            android:textColor="@drawable/color_text"
+            android:textSize="18sp" />
     </RelativeLayout>
 
 </LinearLayout>

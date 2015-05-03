@@ -74,7 +74,6 @@ public class ProviderActivity extends Activity {
 
 
 
-
 		ImageView backView = (ImageView)this.findViewById(R.id.provider_back);
 		backView.setOnClickListener(new OnClickListener() {
 
@@ -351,8 +350,10 @@ public class ProviderActivity extends Activity {
 
 
 	}
-	private void defaultLoad()
+	public void defaultLoad()
 	{
+		Log.d(getString(R.string.log_tag), "defaultLoaded");
+
 		Runnable dataRunnable = new Runnable() {
 
 			@Override
@@ -497,5 +498,7 @@ public class ProviderActivity extends Activity {
 	public void setListItems(List<Map<String,String>> listItems) {
 		this.listItems = listItems;
 	}
+	
+	
 
 }

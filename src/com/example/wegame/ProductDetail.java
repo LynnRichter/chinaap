@@ -30,11 +30,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class ProductDetail extends Activity {
 
@@ -412,7 +414,22 @@ public class ProductDetail extends Activity {
 				case SUCCESS:
 					providerAdapter = new ProviderAdapter(ProductDetail.this, getProviderDataList()); //¥¥Ω®  ≈‰∆˜  
 					providerView.setAdapter(providerAdapter);
+					providerView.setOnItemClickListener(new OnItemClickListener() {
 
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int arg2, long arg3) {
+							// TODO Auto-generated method stub
+							HashMap<String,String> map=(HashMap<String,String>)getProviderDataList().get(arg2);   
+							Intent intent = new Intent();
+							intent.setClass(ProductDetail.this, ProviderDetailActivity.class);
+							intent.putExtra("Item", map);
+							startActivity(intent);
+
+
+
+						}
+					});
 					break;
 				case ERROR:
 

@@ -23,7 +23,7 @@
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/bank_home_ico" />
+            android:src="@drawable/bank_ico" />
 
         <TextView
             android:id="@+id/main_city"

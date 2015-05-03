@@ -7,7 +7,11 @@ import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -15,7 +19,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
-public class TabMainActivity extends TabActivity {
+public class TabMainActivity<T> extends TabActivity {
 	private TabHost tabHost;
 
 	@Override
@@ -57,11 +61,24 @@ public class TabMainActivity extends TabActivity {
 		RadioGroup radioGroup=(RadioGroup) this.findViewById(R.id.main_tab_group);
 		tabHost.setCurrentTab(Integer.parseInt((String) getIntent().getSerializableExtra("id")));
 
-
+		RadioButton providerButton = (RadioButton)findViewById(R.id.main_tab_provider);
+		providerButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Activity currentActivity = getCurrentActivity();
+				if (currentActivity instanceof ProviderActivity) {
+				           ((ProviderActivity) currentActivity).defaultLoad();;
+				       }
+				
+			}
+		});
 		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
+
 				// TODO Auto-generated method stub
 				switch (checkedId) {
 				case R.id.main_tab_price:
@@ -69,6 +86,7 @@ public class TabMainActivity extends TabActivity {
 					break;
 				case R.id.main_tab_provider:
 					tabHost.setCurrentTabByTag(getString(R.string.main_provider));
+					
 					break;
 				case R.id.main_tab_list:
 					tabHost.setCurrentTabByTag(getString(R.string.main_list));
@@ -80,18 +98,17 @@ public class TabMainActivity extends TabActivity {
 					break;
 				}
 			}
+			
 		});
 		RadioButton checkButton = null;
 		Log.d(getString(R.string.log_tag), "µã»÷´«ÖÁ£º"+(String) getIntent().getSerializableExtra("id"));
 		switch (Integer.parseInt((String) getIntent().getSerializableExtra("id"))) {
 		case 0:
 			checkButton =(RadioButton)findViewById(R.id.main_tab_price);
-			
-
 			break;
 		case 1:
 			checkButton =(RadioButton)findViewById(R.id.main_tab_provider);
-
+			
 			break;
 		case 2:
 			checkButton =(RadioButton)findViewById(R.id.main_tab_list);
@@ -106,6 +123,9 @@ public class TabMainActivity extends TabActivity {
 			break;
 		}
 		checkButton.setChecked(true);
+		
+		
 
 	}
+	
 }
