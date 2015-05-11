@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import com.example.wegame.LHScrollView.OnScrollChangedListener;
 import com.example.wegame.PriceActivity.PriceAdapter;
 
+import android.R.bool;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -55,6 +56,7 @@ public class ListActivity extends Activity{
 	private List<String> cityidlist = new ArrayList<String>();
 	private ArrayAdapter<String> cityAdapter;   
 	private Runnable cityRunnable = null;
+	private boolean running = false;
 
 
 
@@ -126,7 +128,13 @@ public class ListActivity extends Activity{
 				setPage(1);
 				setTotal(0);
 				getListItems().clear();
-				startLoad();
+				Log.d(getString(R.string.log_tag), "getListItems："+getListItems().size());
+				if (!running) {
+					running = true;
+					startLoad();
+					
+				}
+				
 			}
 		});
 
@@ -330,7 +338,6 @@ public class ListActivity extends Activity{
 					getListItems().clear();
 					setTotal(0);
 					setPage(1);
-//					setPrice_index(0);
 					startLoad();
 				}
 
@@ -346,32 +353,32 @@ public class ListActivity extends Activity{
 						(String)msg.obj, Toast.LENGTH_SHORT);
 				toast.setGravity(Gravity.CENTER, 0, 0);
 				toast.show();
-//				View itemView = listView.getChildAt(msg.arg1 - listView.getFirstVisiblePosition());
-//				if (itemView != null) {
-//					TextView lisTextView = (TextView) itemView.findViewById(R.id.item_price_list);
-//					if (lisTextView != null) {// 当item可见的时候更新
-//						switch (msg.arg2) {
-//						case 0:
-//							lisTextView.setBackgroundResource(R.drawable.main_price_start_bg);
-//							Log.d(getString(R.string.log_tag), "取消清单："+msg.arg1+"行");
-//
-//							lisTextView.setTextColor(android.graphics.Color.WHITE);
-//							lisTextView.setText(getString(R.string.price_addlist));
-//							break;
-//						case 1:
-//							lisTextView.setBackgroundResource(R.drawable.color_grayback);
-//							lisTextView.setTextColor(R.drawable.color_white);
-//							lisTextView.setText("长按移除清单");
-//							break;
-//						default:
-//							break;
-//						}
-//
-//					}
-//				}
+				//				View itemView = listView.getChildAt(msg.arg1 - listView.getFirstVisiblePosition());
+				//				if (itemView != null) {
+				//					TextView lisTextView = (TextView) itemView.findViewById(R.id.item_price_list);
+				//					if (lisTextView != null) {// 当item可见的时候更新
+				//						switch (msg.arg2) {
+				//						case 0:
+				//							lisTextView.setBackgroundResource(R.drawable.main_price_start_bg);
+				//							Log.d(getString(R.string.log_tag), "取消清单："+msg.arg1+"行");
+				//
+				//							lisTextView.setTextColor(android.graphics.Color.WHITE);
+				//							lisTextView.setText(getString(R.string.price_addlist));
+				//							break;
+				//						case 1:
+				//							lisTextView.setBackgroundResource(R.drawable.color_grayback);
+				//							lisTextView.setTextColor(R.drawable.color_white);
+				//							lisTextView.setText("长按移除清单");
+				//							break;
+				//						default:
+				//							break;
+				//						}
+				//
+				//					}
+				//				}
 				getListItems().remove(msg.arg1);
 				listViewAdapter.notifyDataSetChanged();
-//				listView.removeViewAt(msg.arg1);
+				//				listView.removeViewAt(msg.arg1);
 				listView.invalidate();
 			}
 		};
@@ -455,7 +462,7 @@ public class ListActivity extends Activity{
 										int tempPage =getPage();
 										tempPage++;
 										setPage(tempPage);
-										
+
 										startLoad();
 									}
 
@@ -635,8 +642,8 @@ public class ListActivity extends Activity{
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PRICEINFO)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
-					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
-					Log.d(getString(R.string.log_tag), "PriceData："+datasString);
+//					Log.d(getString(R.string.log_tag), "Request Data："+parBuffer.toString());
+//					Log.d(getString(R.string.log_tag), "PriceData："+datasString);
 
 					if (datasString.length() == 0) {
 						msg.what = DATA_ERROR;
@@ -686,6 +693,7 @@ public class ListActivity extends Activity{
 
 
 				dataHandler.sendMessage(msg);
+				running =false;
 			}
 		};
 		new Thread(dataRunnable).start();

@@ -35,7 +35,7 @@ public class DefaultActivity extends Activity {
 				// TODO Auto-generated method stub
 				Message msg = new Message();
 				try {
-					Thread.sleep(4000);
+					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

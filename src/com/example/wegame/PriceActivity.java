@@ -1,6 +1,7 @@
 package com.example.wegame;
 
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -470,6 +471,15 @@ public class PriceActivity extends Activity{
 
 					}
 					else{
+						if(JSONHelpler.getLogin(getApplicationContext()))
+						{
+							SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+							  ParsePosition pos = new ParsePosition(0);
+							  Date strtodate = formatter.parse(dateView.getText().toString(), pos);
+							  setTimestamp(Long.toString(strtodate.getTime()));
+							  
+						}
+							
 						getListItems().clear();
 						setPage(1);
 						setTotal(0);

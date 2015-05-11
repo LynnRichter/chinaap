@@ -208,7 +208,20 @@ public class PriceSearchResultActivity extends Activity{
 				finish();				
 			}
 		});
+		ImageView searchView =(ImageView)findViewById(R.id.price_search_btn);
+		searchView.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View arg0) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);   
+
+				imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);  
+				setPage(1);
+				setTotal(0);
+				getListItems().clear();
+				startLoad();
+			}
+		});
 		final Handler cityHandler = new Handler()
 		{
 			@Override

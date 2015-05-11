@@ -47,17 +47,19 @@ public class TabMainActivity<T> extends TabActivity {
 
 
 		//		ÅÐ¶ÏÊÇ·ñµÇÂ¼¹ýÕÊºÅ
-		if (JSONHelpler.getLogin(getApplicationContext())) {
-			intent=new Intent().setClass(this, VIPActivity.class);
-
-		}
-		else {
-			intent=new Intent().setClass(this, LoginActivity.class);
-
-		}
+//		if (JSONHelpler.getLogin(getApplicationContext())) {
+//			intent=new Intent().setClass(this, VIPActivity.class);
+//
+//		}
+//		else {
+//			intent=new Intent().setClass(this, LoginActivity.class);
+//
+//		}
+		intent = new Intent().setClass(this, ViewFlipperMe.class);
 		spec=tabHost.newTabSpec(getString(R.string.me)).setIndicator(getString(R.string.me)).setContent(intent);
 		tabHost.addTab(spec);
-
+		
+		
 		RadioGroup radioGroup=(RadioGroup) this.findViewById(R.id.main_tab_group);
 		tabHost.setCurrentTab(Integer.parseInt((String) getIntent().getSerializableExtra("id")));
 
@@ -69,11 +71,15 @@ public class TabMainActivity<T> extends TabActivity {
 				// TODO Auto-generated method stub
 				Activity currentActivity = getCurrentActivity();
 				if (currentActivity instanceof ProviderActivity) {
-				           ((ProviderActivity) currentActivity).defaultLoad();;
+				           ((ProviderActivity) currentActivity).defaultLoad();
+				           
 				       }
 				
 			}
 		});
+		
+		
+		
 		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -92,7 +98,9 @@ public class TabMainActivity<T> extends TabActivity {
 					tabHost.setCurrentTabByTag(getString(R.string.main_list));
 					break;
 				case R.id.main_tab_vip:
+					
 					tabHost.setCurrentTabByTag(getString(R.string.me));
+					
 					break;
 				default:
 					break;
@@ -101,7 +109,6 @@ public class TabMainActivity<T> extends TabActivity {
 			
 		});
 		RadioButton checkButton = null;
-		Log.d(getString(R.string.log_tag), "µã»÷´«ÖÁ£º"+(String) getIntent().getSerializableExtra("id"));
 		switch (Integer.parseInt((String) getIntent().getSerializableExtra("id"))) {
 		case 0:
 			checkButton =(RadioButton)findViewById(R.id.main_tab_price);
@@ -127,5 +134,7 @@ public class TabMainActivity<T> extends TabActivity {
 		
 
 	}
+	
+	
 	
 }
