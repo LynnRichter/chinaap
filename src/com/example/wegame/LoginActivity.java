@@ -61,6 +61,8 @@ public class LoginActivity extends Activity {
 							getString(R.string.login_success), Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
+					Intent mIntent = new Intent();
+					LoginActivity.this.setResult(0, mIntent);  
 					finish();
 					break;
 				case LOGIN_ERROR:

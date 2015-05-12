@@ -80,6 +80,7 @@ public class PriceActivity extends Activity{
 	private ListView listView;
 	private List<Map<String,String>> listItems;
 	private RelativeLayout headView;
+	private TextView dateView = null;
 	private int total;
 	private int page;
 	private int price_index;
@@ -106,21 +107,21 @@ public class PriceActivity extends Activity{
 		final RelativeLayout tipsLayout = (RelativeLayout)findViewById(R.id.tips_view);
 		if (JSONHelpler.getFirst(getApplicationContext())) {
 			tipsLayout.setVisibility(View.GONE);
-			
+
 		}
 		else
 		{
-//			tipsLayout.setVisibility(View.GONE);
+			//			tipsLayout.setVisibility(View.GONE);
 			tipsLayout.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View arg0) {
-					
+
 					tipsLayout.setVisibility(View.GONE);
 					JSONHelpler.setFirst(getApplicationContext(), true);
 				}
 			});
-			
+
 		}
 
 		citySpinner = (Spinner)findViewById(R.id.price_spinner_city);
@@ -135,7 +136,7 @@ public class PriceActivity extends Activity{
 		View  headindex = (View)findViewById(R.id.price_head);
 		final ImageView arrowImage =(ImageView)findViewById(R.id.item_price_head_arrow);
 		headindex.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				if (getPrice_index() == 0) {
@@ -151,9 +152,9 @@ public class PriceActivity extends Activity{
 				startLoad();
 			}
 		});
-		
 
-		final TextView dateView =(TextView)findViewById(R.id.price_btn_date);
+
+		dateView =(TextView)findViewById(R.id.price_btn_date);
 		SimpleDateFormat formatter = new SimpleDateFormat   ("yyyy-MM-dd");     
 		Date curDate = new Date(System.currentTimeMillis());//获取当前时间     
 		String str = formatter.format(curDate);
@@ -348,15 +349,15 @@ public class PriceActivity extends Activity{
 					setPage(1);
 					if (!JSONHelpler.getLogin(getApplicationContext())) {
 						Calendar c = Calendar.getInstance();  
-			            c.setTime(new Date(System.currentTimeMillis()));  
-			            c.add(c.MONTH, -3);  
-			            Date temp_date = c.getTime();
+						c.setTime(new Date(System.currentTimeMillis()));  
+						c.add(c.MONTH, -3);  
+						Date temp_date = c.getTime();
 						setTimestamp(Long.toString(temp_date.getTime()));
 					}
 					else {
 						setTimestamp(Long.toString(System.currentTimeMillis()));
 					}
-					
+
 					List<Map<String, String>> listitems = new ArrayList<Map<String, String>>();  
 					setListItems(listitems);
 					startLoad();					
@@ -430,9 +431,10 @@ public class PriceActivity extends Activity{
 
 				Intent intent  = new Intent();
 				intent.setClass(PriceActivity.this, LoginActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, 0);
 			}
 		};
+
 		Button searchButton = (Button)findViewById(R.id.price_button_start);
 		searchButton.setOnClickListener(new OnClickListener() {
 
@@ -467,24 +469,24 @@ public class PriceActivity extends Activity{
 							}
 						};
 						new Thread(waitRunnable).start();
-					
+
 
 					}
 					else{
 						if(JSONHelpler.getLogin(getApplicationContext()))
 						{
 							SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-							  ParsePosition pos = new ParsePosition(0);
-							  Date strtodate = formatter.parse(dateView.getText().toString(), pos);
-							  setTimestamp(Long.toString(strtodate.getTime()));
-							  
+							ParsePosition pos = new ParsePosition(0);
+							Date strtodate = formatter.parse(dateView.getText().toString(), pos);
+							setTimestamp(Long.toString(strtodate.getTime()));
+
 						}
-							
+
 						getListItems().clear();
 						setPage(1);
 						setTotal(0);
 						setPrice_index(0);
-						
+
 						startLoad();
 					}
 				} 
@@ -492,7 +494,7 @@ public class PriceActivity extends Activity{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
-				
+
 
 
 			}
@@ -551,7 +553,7 @@ public class PriceActivity extends Activity{
 					}
 					LHScrollView headScrollView = (LHScrollView)headView.findViewById(R.id.horizontalScrollView1);
 					headScrollView.smoothScrollTo(0, 0);
-					
+
 					listViewAdapter = new PriceAdapter(PriceActivity.this,R.layout.item_price); //创建适配器   
 					listView.setAdapter(listViewAdapter);
 					listView.setOnItemClickListener(new OnItemClickListener() {
@@ -559,7 +561,7 @@ public class PriceActivity extends Activity{
 						@Override
 						public void onItemClick(AdapterView<?> arg0, View arg1,
 								int arg2, long arg3) {
-//							Log.d(getString(R.string.log_tag), "你单击了第："+arg2+"行");
+							//							Log.d(getString(R.string.log_tag), "你单击了第："+arg2+"行");
 							HashMap<String,String> map=(HashMap<String,String>)getListItems().get(arg2);   
 							Intent intent = new Intent();
 							intent.setClass(PriceActivity.this, ProductDetail.class);
@@ -757,7 +759,7 @@ public class PriceActivity extends Activity{
 				StringBuffer parBuffer  = new StringBuffer();
 				parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
 				.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
-				.append("cityId=").append(getCityID()).append("&")
+				.append("cityid=").append(getCityID()).append("&")
 				.append("date=").append(getTimestamp()).append("&")
 				.append("productCategoryid=").append(getTyepID()).append("&")
 				.append("userid=").append(JSONHelpler.getString(getApplicationContext(), getString(R.string.key_userid))).append("&")
@@ -766,8 +768,8 @@ public class PriceActivity extends Activity{
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_PRICEINFO)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
-//										Log.d(getString(R.string.log_tag), "PriceActivity Request Data："+parBuffer.toString());
-					//					Log.d(getString(R.string.log_tag), "PriceData："+datasString);
+					Log.d(getString(R.string.log_tag), "PriceActivity Request Data："+parBuffer.toString());
+					Log.d(getString(R.string.log_tag), "PriceData："+datasString);
 
 					if (datasString.length() == 0) {
 						msg.what = DATA_ERROR;
@@ -966,7 +968,7 @@ public class PriceActivity extends Activity{
 			holder.rprice_text.setText(" ￥"+getListItems().get(position).get("rprice"));
 			holder.unit_text.setText(getListItems().get(position).get("unit"));
 			holder.priceIndex_text.setText(getListItems().get(position).get("priceIndex").equals("null") ? "0" :getListItems().get(position).get("priceIndex"));
-			holder.marketShort_text.setText(getListItems().get(position).get("marketShort"));
+			holder.marketShort_text.setText(getListItems().get(position).get("marketShort").replace("\r\n", ""));
 			holder.releaseDate_text.setText(getListItems().get(position).get("releaseDate"));
 
 			return convertView;
@@ -1006,4 +1008,26 @@ public class PriceActivity extends Activity{
 	//
 	//
 	//	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 0 && resultCode ==0) {
+			if(JSONHelpler.getLogin(getApplicationContext()))
+			{
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				ParsePosition pos = new ParsePosition(0);
+				Date strtodate = formatter.parse(dateView.getText().toString(), pos);
+				setTimestamp(Long.toString(strtodate.getTime()));
+
+			}
+
+			getListItems().clear();
+			setPage(1);
+			setTotal(0);
+			setPrice_index(0);
+
+			startLoad();
+		}
+	}
 }

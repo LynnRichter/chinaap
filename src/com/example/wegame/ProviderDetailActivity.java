@@ -60,7 +60,7 @@ public class ProviderDetailActivity extends Activity {
 		introView.setText(map.get("introduction"));
 		
 		TextView promiseView =(TextView)findViewById(R.id.provider_detail_promise);
-		promiseView.setText(map.get("promise"));
+		promiseView.setText(map.get("promise").replace("&nbsp;", "").replace("&rdquo;", "").replace("&ldquo;", ""));
 		
 		
 	}
