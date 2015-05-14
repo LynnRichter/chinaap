@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +35,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -44,6 +46,7 @@ public class ProductDetail extends Activity {
 	private TextView opView;
 	private static final int SUCCESS =0;
 	private static final int ERROR = 1;
+	private static final int EMPTY = 3;
 	private List<Map<String,String>> priceDataList;
 	private PricesAdapter pricesAdapter;
 	private  List<Map<String,String>> priceHistoryList;
@@ -117,7 +120,7 @@ public class ProductDetail extends Activity {
 
 		TextView providerHead =(TextView)findViewById(R.id.detail_provider_head);
 		providerHead.setText(getIntent().getSerializableExtra("CityName")+map.get("productName")+"供应商推荐");
-
+		final RelativeLayout providerLayout = (RelativeLayout)findViewById(R.id.detail_provider_layout);
 		final NoScrollListView pricesListView =(NoScrollListView)findViewById(R.id.detail_prices_list);
 		final NoScrollListView priceHistoryView =(NoScrollListView)findViewById(R.id.detail_price_history_list);
 		final NoScrollListView providerView =(NoScrollListView)findViewById(R.id.detail_price_provider_list);
@@ -410,28 +413,33 @@ public class ProductDetail extends Activity {
 			@Override
 			public void handleMessage(Message msg)
 			{
-				switch (msg.arg1) {
+
+				switch (msg.what) {
 				case SUCCESS:
 					providerAdapter = new ProviderAdapter(ProductDetail.this, getProviderDataList()); //创建适配器  
 					providerView.setAdapter(providerAdapter);
-					providerView.setOnItemClickListener(new OnItemClickListener() {
-
-						@Override
-						public void onItemClick(AdapterView<?> arg0, View arg1,
-								int arg2, long arg3) {
-							// TODO Auto-generated method stub
-							HashMap<String,String> map=(HashMap<String,String>)getProviderDataList().get(arg2);   
-							Intent intent = new Intent();
-							intent.setClass(ProductDetail.this, ProviderDetailActivity.class);
-							intent.putExtra("Item", map);
-							startActivity(intent);
-
-
-
-						}
-					});
+					//					providerView.setOnItemClickListener(new OnItemClickListener() {
+					//
+					//						@Override
+					//						public void onItemClick(AdapterView<?> arg0, View arg1,
+					//								int arg2, long arg3) {
+					//							// TODO Auto-generated method stub
+					//							HashMap<String,String> map=(HashMap<String,String>)getProviderDataList().get(arg2);   
+					//							Intent intent = new Intent();
+					//							intent.setClass(ProductDetail.this, ProviderDetailActivity.class);
+					//							intent.putExtra("Item", map);
+					//							startActivity(intent);
+					//
+					//
+					//
+					//						}
+					//					});
 					break;
 				case ERROR:
+
+					break;
+				case EMPTY:
+					providerLayout.setVisibility(View.GONE);
 
 					break;
 
@@ -450,7 +458,7 @@ public class ProductDetail extends Activity {
 				StringBuffer parBuffer  = new StringBuffer();
 				parBuffer.append("server_str=").append(getString(R.string.SERVER_STR)).append("&")
 				.append("client_str=").append(getString(R.string.CLIENT_STR)).append("&")
-				.append("categoryoId=").append(map.get("categoryoid"));
+				.append("categoryId=").append(map.get("categoryoid"));
 				JSONObject retJsonObject = JSONHelpler.getJason(getString(R.string.URL_2PROVIDER)+"?"+parBuffer.toString());
 				try {
 					String datasString = retJsonObject.getString("data");
@@ -458,26 +466,32 @@ public class ProductDetail extends Activity {
 					Log.d(getString(R.string.log_tag), "ProviderData："+datasString);
 
 					if (datasString.length() == 0) {
-						msg.what = ERROR;
+						msg.what = EMPTY;
 						msg.obj = retJsonObject.getString("info");
 					}else {
 
 						JSONArray jsonArray = retJsonObject.getJSONArray("data");
-						for (int i=0;i<jsonArray.length();i++) {
-							JSONObject item = jsonArray.getJSONObject(i);
-							Map<String, String> map = new HashMap<String, String>();
-							map.put("imageurl", item.getString("imageurl"));
-							map.put("providerName", item.getString("providerName"));
-							map.put("mainProduct", item.getString("mainProduct"));
-							map.put("contact", item.getString("contact"));
-							map.put("contactNumber", item.getString("contactNumber"));
-							map.put("companyAddress", item.getString("companyAddress"));
-							map.put("introduction", item.getString("introduction"));
-							map.put("promise", item.getString("promise"));
-							getProviderDataList().add(map);
+						if (jsonArray.length() == 0) {
+							msg.what = EMPTY;
+						}else {
+							for (int i=0;i<jsonArray.length();i++) {
+								JSONObject item = jsonArray.getJSONObject(i);
+								Map<String, String> map = new HashMap<String, String>();
+								map.put("imageurl", item.getString("imageurl"));
+								map.put("providerName", item.getString("providerName"));
+								map.put("mainProduct", item.getString("mainProduct"));
+								map.put("contact", item.getString("contact"));
+								map.put("contactNumber", item.getString("contactNumber"));
+								map.put("companyAddress", item.getString("companyAddress"));
+								map.put("introduction", item.getString("introduction"));
+								map.put("promise", item.getString("promise"));
+								getProviderDataList().add(map);
+							}
+
+							msg.what = SUCCESS;
+
 						}
 
-						msg.what = SUCCESS;
 
 					}
 
@@ -541,7 +555,7 @@ public class ProductDetail extends Activity {
 		double marxY = 0;
 		for(int i = 0;i<getPriceHistoryList().size();i++)
 		{
-			
+
 			double rprice = Double.parseDouble( getPriceHistoryList().get(i).get("rprice"));
 			series.add(i,rprice);
 			if(rprice>marxY)
@@ -575,16 +589,16 @@ public class ProductDetail extends Activity {
 				mRenderer.addXTextLabel(i,"");
 
 			}
-			
-			
-			
+
+
+
 		}
 		mRenderer.setXLabels(0);//设置只显示如1月，2月等替换后的东西，不显示1,2,3等
 		mRenderer.setMargins(new int[] { 0, 15, 0, 0 });//设置视图位置
 		mRenderer.setInScroll(false);
 		mRenderer.setMarginsColor(Color.WHITE);
 		XYSeriesRenderer r = new XYSeriesRenderer();//(类似于一条线对象)
-		
+
 		r.setColor(Color.BLUE);//设置颜色
 		r.setPointStyle(PointStyle.CIRCLE);//设置点的样式
 		r.setFillPoints(true);//填充点（显示的点是空心还是实心）

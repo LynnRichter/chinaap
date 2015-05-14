@@ -355,13 +355,13 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/color_topback" />
             </RelativeLayout>
-            <LinearLayout 
+
+            <LinearLayout
                 android:id="@+id/detail_line_parent"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:background="@drawable/color_grayback"
-                android:orientation="vertical">
-                
+                android:orientation="vertical" >
             </LinearLayout>
             <!-- 历年价格 -->
 
@@ -443,6 +443,7 @@
             <!-- 供应商推荐 -->
 
             <RelativeLayout
+                android:id="@+id/detail_provider_layout"
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 android:layout_marginTop="10dp"
@@ -464,6 +465,7 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/color_topback" />
             </RelativeLayout>
+
             <com.example.wegame.NoScrollListView
                 android:id="@+id/detail_price_provider_list"
                 android:layout_width="match_parent"
@@ -471,8 +473,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/color_white"
-                android:divider="@drawable/color_stroke" 
-                android:dividerHeight="1px">
+                android:divider="@drawable/color_stroke"
+                android:dividerHeight="1px"
+                android:listSelector="@android:color/transparent" >
             </com.example.wegame.NoScrollListView>
         </LinearLayout>
     </ScrollView>
