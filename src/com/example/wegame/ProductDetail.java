@@ -463,7 +463,7 @@ public class ProductDetail extends Activity {
 				try {
 					String datasString = retJsonObject.getString("data");
 					Log.d(getString(R.string.log_tag), "Request Data£º"+parBuffer.toString());
-					Log.d(getString(R.string.log_tag), "ProviderData£º"+datasString);
+//					Log.d(getString(R.string.log_tag), "ProviderData£º"+datasString);
 
 					if (datasString.length() == 0) {
 						msg.what = EMPTY;

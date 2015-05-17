@@ -671,6 +671,7 @@ public class ListActivity extends Activity{
 								map.put("releaseDate", item.getString("releaseDate"));
 								map.put("marketoid", item.getString("marketoid"));
 								map.put("productId", item.getString("productId"));
+								map.put("categoryoid", item.getString("categoryoid"));
 
 								//							Log.d(getString(R.string.log_tag), "isInUserPurchaseList £º"+item.getString("isInUserPurchaseList"));
 
